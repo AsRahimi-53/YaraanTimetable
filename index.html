@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>🏫 ياران درسي مهالوېش</title>
+
+<!-- ===== PWA: installable app metadata ===== -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0D47A1">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="ياران درسي مهالوېش">
+<!-- iOS home-screen support -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ياران درسي مهالوېش">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
+<style>
+:root{--primary:#1565C0;--primary-light:#42A5F5;--primary-lighter:#BBDEFB;--primary-lightest:#E3F2FD;--primary-dark:#0D47A1;--secondary:#0277BD;--accent:#00ACC1;--bg:#ECEFF1;--card:#FFFFFF;--text:#212121;--text-light:#546E7A;--border:#CFD8DC;--success:#2E7D32;--warning:#F57F17;--danger:#C62828;--info:#0288D1;--sidebar-w:260px;--header-h:60px;--shadow:0 2px 8px rgba(0,0,0,.12);--shadow-lg:0 8px 32px rgba(0,0,0,.15);--radius:10px;--radius-sm:6px;--trans:.3s ease}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh}
+html[dir="rtl"] body{font-family:'Noto Sans Arabic','Noto Naskh Arabic','Segoe UI',Tahoma,Arial,sans-serif;letter-spacing:0}
+html[dir="rtl"] .sidebar{left:auto;right:0}
+html[dir="rtl"] .main-area{margin-left:0;margin-right:var(--sidebar-w)}
+html[dir="rtl"] .sidebar.collapsed~.main-area{margin-right:60px}
+html[dir="rtl"] .sidebar .menu-item{text-align:right;padding:12px 20px 12px 12px}
+html[dir="rtl"] .sidebar .menu-item .mi-icon{margin-left:8px;margin-right:0}
+html[dir="rtl"] .hamburger{left:12px;right:auto}
+html[dir="rtl"] .footer-left{border-right:1px solid rgba(255,255,255,.2);border-left:none}
+.header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:linear-gradient(135deg,var(--primary-dark),var(--primary),var(--secondary));display:flex;align-items:center;padding:0 20px;z-index:1000;box-shadow:0 2px 12px rgba(0,0,0,.25);color:#fff}
+.header .logo{font-size:1.05rem;font-weight:700;white-space:nowrap;display:flex;align-items:center;gap:9px}
+.header .logo-mark{width:38px;height:38px;flex:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.2))}
+.header .logo-text{display:flex;flex-direction:column;line-height:1.15}
+.header .logo-title{font-size:1rem;font-weight:800}
+.header .logo-school{font-size:.72rem;opacity:.9;margin-top:2px;font-weight:500;display:none}
+.header .logo span{background:rgba(255,255,255,.15);padding:4px 10px;border-radius:20px;font-size:.72rem}
+.sidebar-brand{padding:14px 16px 12px;margin:0 10px 8px;border-bottom:1px solid rgba(255,255,255,.15);display:flex;align-items:center;gap:10px}
+.sidebar-brand .school-mark{width:42px;height:42px;flex:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.18))}
+.sidebar-brand-text{min-width:0}.sidebar-brand-title{font-weight:800;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sidebar-brand-sub{font-size:.68rem;opacity:.72;margin-top:2px}
+.dashboard-brand{width:68px;height:68px;flex:none;filter:drop-shadow(0 4px 7px rgba(0,0,0,.18))}
+
+.hamburger{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:6px 10px;border-radius:6px}
+.hamburger:hover{background:rgba(255,255,255,.15)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.lang-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:5px 12px;border-radius:20px;cursor:pointer;font-size:.8rem;transition:var(--trans)}
+.lang-btn:hover,.lang-btn.active{background:rgba(255,255,255,.3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;bottom:0;width:var(--sidebar-w);background:linear-gradient(180deg,#0D47A1 0%,#1565C0 40%,#1976D2 100%);color:#fff;overflow-y:auto;z-index:900;transition:width var(--trans);box-shadow:2px 0 12px rgba(0,0,0,.2);display:flex;flex-direction:column}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:2px}
+.sidebar.collapsed{width:60px}
+.sidebar.collapsed .menu-item .mi-text,.sidebar.collapsed .menu-item .mi-arrow,.sidebar.collapsed .sidebar-section-title,.sidebar.collapsed .stats-mini{display:none}
+.sidebar.collapsed .menu-item{justify-content:center;padding:14px 0}
+.sidebar.collapsed~.main-area{margin-left:60px}
+.sidebar-section-title{padding:14px 20px 6px;font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.5);font-weight:600}
+.menu-item{display:flex;align-items:center;padding:11px 20px;cursor:pointer;transition:var(--trans);border-left:3px solid transparent;font-size:.88rem;gap:10px}
+.menu-item:hover{background:rgba(255,255,255,.1)}
+.menu-item.active{background:rgba(255,255,255,.18);border-left-color:#64B5F6}
+.mi-icon{font-size:1.1rem;width:24px;text-align:center}
+.mi-text{flex:1}
+.mi-arrow{font-size:.6rem;opacity:.5}
+.stats-mini{padding:16px 20px;margin-top:auto;border-top:1px solid rgba(255,255,255,.1)}
+.stats-mini .stat-row{display:flex;justify-content:space-between;padding:4px 0;font-size:.8rem;color:rgba(255,255,255,.7)}
+.stats-mini .stat-val{color:#64B5F6;font-weight:600}
+.main-area{margin-left:var(--sidebar-w);margin-top:var(--header-h);padding:20px;min-height:calc(100vh - var(--header-h));transition:margin var(--trans);display:flex;flex-direction:column}
+.section{display:none;animation:fadeIn .4s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px;border:1px solid var(--border)}
+.card-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;margin-bottom:16px;border-bottom:2px solid var(--primary-lighter)}
+.card-title{font-size:1.1rem;font-weight:700;color:var(--primary-dark);display:flex;align-items:center;gap:8px}
+.card-subtitle{font-size:.85rem;color:var(--text-light);margin-top:2px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group label{font-size:.82rem;font-weight:600;color:var(--text-light)}
+.form-group input,.form-group select,.form-group textarea{padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.9rem;transition:var(--trans);background:#fff}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--primary-light);box-shadow:0 0 0 3px rgba(66,165,245,.15)}
+.form-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border:none;border-radius:var(--radius-sm);font-size:.88rem;font-weight:600;cursor:pointer;transition:var(--trans);text-decoration:none;white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;box-shadow:0 2px 6px rgba(21,101,192,.3)}
+.btn-primary:hover{box-shadow:0 4px 12px rgba(21,101,192,.4);transform:translateY(-1px)}
+.btn-success{background:linear-gradient(135deg,#2E7D32,#43A047);color:#fff;box-shadow:0 2px 6px rgba(46,125,50,.3)}
+.btn-success:hover{transform:translateY(-1px)}
+.btn-warning{background:linear-gradient(135deg,#F57F17,#FFB300);color:#fff}
+.btn-danger{background:linear-gradient(135deg,#C62828,#E53935);color:#fff}
+.btn-info{background:linear-gradient(135deg,#0277BD,#0288D1);color:#fff}
+.btn-outline{background:transparent;border:1.5px solid var(--primary);color:var(--primary)}
+.btn-outline:hover{background:var(--primary);color:#fff}
+.btn-sm{padding:6px 12px;font-size:.8rem}
+.btn-export{background:linear-gradient(135deg,#00695C,#00897B);color:#fff;box-shadow:0 2px 6px rgba(0,105,92,.3)}
+.btn-export:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,105,92,.4)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead th{background:var(--primary);color:#fff;padding:10px 12px;text-align:left;font-weight:600;font-size:.82rem;position:sticky;top:0;z-index:2}
+tbody td{padding:8px 12px;border-bottom:1px solid var(--border)}
+tbody tr:hover{background:var(--primary-lightest)}
+tbody tr:nth-child(even){background:#F5F9FC}
+tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
+.actions-cell{display:flex;gap:4px;flex-wrap:wrap}
+.wizard-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:2000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.wizard-overlay.hidden{display:none}
+.wizard-box{background:#fff;border-radius:16px;width:95%;max-width:700px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg)}
+.wizard-header{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff;padding:24px 28px;border-radius:16px 16px 0 0;text-align:center}
+.wizard-header h2{font-size:1.4rem;margin-bottom:4px}
+.wizard-header p{opacity:.85;font-size:.9rem}
+.wizard-body{padding:24px 28px}
+.wizard-step{display:none}.wizard-step.active{display:block}
+.wizard-footer{display:flex;justify-content:space-between;padding:16px 28px;border-top:1px solid var(--border);background:#F8FAFE}
+.step-dots{display:flex;gap:6px;justify-content:center;padding:12px 0}
+.step-dot{width:10px;height:10px;border-radius:50%;background:#ccc;transition:var(--trans)}
+.step-dot.active{background:var(--primary);transform:scale(1.2)}
+.step-dot.done{background:var(--success)}
+.tt-grid{display:grid;gap:2px;background:var(--border);border-radius:var(--radius-sm);overflow:hidden}
+.tt-header{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff;padding:8px;text-align:center;font-weight:700;font-size:.82rem}
+.tt-cell{background:#fff;padding:6px;min-height:50px;text-align:center;font-size:.78rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:var(--trans)}
+.tt-cell:hover{background:var(--primary-lightest)}
+.tt-cell .subj{font-weight:700;color:var(--primary-dark)}
+.tt-cell .teacher{font-size:.72rem;color:var(--text-light)}
+.tt-cell.empty{background:#FAFAFA;color:#ccc;font-size:.7rem}
+.tt-day{background:var(--primary-lighter);color:var(--primary-dark);font-weight:700;padding:8px;text-align:center;font-size:.82rem;display:flex;align-items:center;justify-content:center}
+.tt-break{background:#FFF8E1;color:var(--warning);font-size:.75rem;padding:6px;text-align:center;font-style:italic;display:flex;align-items:center;justify-content:center}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.stat-card{background:#fff;border-radius:var(--radius-sm);padding:16px;text-align:center;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.05);transition:var(--trans)}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.stat-icon{font-size:1.8rem;margin-bottom:6px}
+.stat-val{font-size:1.6rem;font-weight:800;color:var(--primary-dark)}
+.stat-label{font-size:.78rem;color:var(--text-light);margin-top:2px}
+.conflict-item{display:flex;align-items:flex-start;gap:12px;padding:12px;border-left:4px solid var(--danger);background:#FFF8F8;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:8px}
+.conflict-item.warn{border-left-color:var(--warning);background:#FFFDE7}
+.conflict-icon{font-size:1.2rem;margin-top:2px}
+.conflict-text{flex:1}
+.conflict-title{font-weight:700;font-size:.88rem}
+.conflict-desc{font-size:.8rem;color:var(--text-light);margin-top:2px}
+.footer{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff;padding:20px;margin-top:auto;border-radius:var(--radius) var(--radius) 0 0}
+.footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-left{padding-right:20px;border-right:1px solid rgba(255,255,255,.2)}
+.footer-title{font-size:1rem;font-weight:700}
+.footer-subtitle{font-size:.8rem;opacity:.8;margin-top:2px}
+.footer-contact{display:flex;flex-direction:column;gap:6px;font-size:.85rem}
+.footer-contact a{color:#B3E5FC;text-decoration:none;display:flex;align-items:center;gap:6px}
+.footer-contact a:hover{text-decoration:underline}
+.footer-copy{text-align:center;font-size:.75rem;opacity:.6;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.15)}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.72rem;font-weight:600}
+.badge-blue{background:var(--primary-lighter);color:var(--primary-dark)}
+.badge-green{background:#E8F5E9;color:#2E7D32}
+.badge-red{background:#FFEBEE;color:#C62828}
+.badge-yellow{background:#FFF8E1;color:#F57F17}
+.tag{display:inline-block;padding:4px 12px;border-radius:15px;font-size:.8rem;margin:3px;cursor:pointer;border:1.5px solid var(--border);transition:var(--trans)}
+.tag.selected{background:var(--primary);color:#fff;border-color:var(--primary)}
+.tag:hover{border-color:var(--primary-light)}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:15px;font-size:.75rem;background:var(--primary-lightest);color:var(--primary-dark);margin:2px}
+.empty-msg{text-align:center;padding:40px 20px;color:var(--text-light)}
+.empty-msg .em-icon{font-size:2.5rem;margin-bottom:8px}
+.toast{position:fixed;top:80px;right:20px;padding:12px 20px;border-radius:var(--radius-sm);color:#fff;font-size:.88rem;z-index:3000;animation:slideIn .3s ease;box-shadow:var(--shadow-lg);max-width:350px}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
+.toast.info{background:var(--info)}
+.toast.warning{background:var(--warning)}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+.hidden{display:none!important}
+.print-only-title{display:none;text-align:center;padding:4px 0 14px;margin-bottom:14px;border-bottom:2px solid #000}
+.print-only-title .pot-app{font-weight:800;font-size:1.1rem}
+.print-only-title .pot-school{font-size:.88rem;margin-top:2px;color:var(--text-light)}
+.print-only-footer{display:none;text-align:center;padding-top:10px;margin-top:14px;border-top:1px solid #999;font-size:.75rem;color:var(--text-light)}
+.pagination-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:12px 4px 4px;margin-top:8px;border-top:1px solid var(--border)}
+.pagination-bar .pg-size{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--text-light)}
+.pagination-bar .pg-size select{padding:5px 8px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.8rem;background:#fff}
+.pagination-bar .pg-info{font-size:.8rem;color:var(--text-light)}
+.pagination-bar .pg-nav{display:flex;align-items:center;gap:8px}
+.pagination-bar .pg-current{font-size:.82rem;font-weight:600;color:var(--primary-dark);min-width:56px;text-align:center}
+@media print{.pagination-bar{display:none!important}}
+@media(max-width:900px){.pagination-bar{justify-content:center;text-align:center}}
+.mt-sm{margin-top:8px}.mt-md{margin-top:16px}.mb-sm{margin-bottom:8px}
+.text-sm{font-size:.82rem}.text-muted{color:var(--text-light)}
+.period-config-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.period-config-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center}
+.period-config-card h4{color:var(--primary);font-size:.9rem;margin-bottom:8px}
+@page{size:A4;margin:10mm}
+@media print{.header,.sidebar,.hamburger,.footer,.btn,.form-actions,.wizard-overlay,.toast{display:none!important}.section:not(.active){display:none!important}.main-area{margin:0!important;padding:5px!important}.card{box-shadow:none!important;border:1px solid #000!important;break-inside:avoid}.tt-grid{border:2px solid #000}.tt-header,.tt-day{background:#333!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.tt-cell{border:1px solid #999!important}body{background:#fff!important}.print-only-title{display:block!important}.print-only-footer{display:block!important}
+/* Class & Teacher timetable: force a single-grid layout that always fits one A4 page (school days/periods are bounded, so no scaling is needed — just tighter, non-scrolling spacing). */
+#classttPrint,#teacherttPrint{width:100%;page-break-inside:avoid;break-inside:avoid}
+#classttPrint .table-wrap,#teacherttPrint .table-wrap{overflow:visible!important;width:100%!important}
+#classttPrint .tt-grid,#teacherttPrint .tt-grid{page-break-inside:avoid;break-inside:avoid;width:100%!important}
+#classttPrint .tt-cell,#teacherttPrint .tt-cell{min-height:32px;padding:3px 2px;font-size:.7rem}
+#classttPrint .tt-header,#teacherttPrint .tt-header,#classttPrint .tt-day,#teacherttPrint .tt-day{padding:4px 2px;font-size:.7rem}
+#classttPrint .tt-cell .subj,#teacherttPrint .tt-cell .subj{font-size:.7rem}
+#classttPrint .tt-cell .teacher,#teacherttPrint .tt-cell .teacher{font-size:.6rem}
+}
+@media(max-width:900px){.sidebar{transform:translateX(-100%);width:260px}.sidebar.open{transform:translateX(0)}html[dir="rtl"] .sidebar{transform:translateX(100%)}html[dir="rtl"] .sidebar.open{transform:translateX(0)}.main-area{margin-left:0!important;margin-right:0!important}.hamburger{display:block}.form-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.footer-content{flex-direction:column;text-align:center}.footer-left{border-right:none;border-bottom:1px solid rgba(255,255,255,.2);padding-right:0;padding-bottom:12px}}
+/* ===== MOBILE APP UX ===== */
+.mobile-bottom-nav{display:none}
+@media(max-width:900px){
+  :root{--header-h:56px;--mobile-nav-h:68px}
+  html,body{width:100%;min-width:0;overflow-x:hidden}
+  body{padding-bottom:var(--mobile-nav-h)}
+  .header{height:var(--header-h);padding:0 10px;position:fixed}
+  .header .logo{gap:6px;max-width:calc(100% - 96px);overflow:hidden}
+  .header .logo-mark{width:34px;height:34px}
+  .header .logo-title{font-size:.9rem;overflow:hidden;text-overflow:ellipsis}
+  .header-right{gap:4px}
+  .lang-btn{padding:7px 9px;font-size:.72rem}
+  .hamburger{font-size:1.35rem;padding:6px 8px}
+  .sidebar{top:var(--header-h);bottom:0;width:min(88vw,320px);z-index:1500;box-shadow:0 8px 28px rgba(0,0,0,.28)}
+  .sidebar-brand{padding:14px 14px 12px;margin:0 8px 8px}
+  .sidebar .menu-item{min-height:48px;padding:12px 18px;font-size:.9rem}
+  .main-area{margin:var(--header-h) 0 0!important;padding:12px 10px calc(var(--mobile-nav-h) + 12px)!important;min-height:calc(100vh - var(--header-h));width:100%;}
+  .section.active{width:100%}
+  .card{padding:14px;border-radius:12px;margin-bottom:12px}
+  .card-header{align-items:flex-start;gap:10px;flex-wrap:wrap;padding-bottom:10px;margin-bottom:12px}
+  .card-title{font-size:1rem}
+  .card-subtitle{font-size:.78rem;line-height:1.4}
+  .form-grid{grid-template-columns:1fr!important;gap:10px}
+  .form-group input,.form-group select,.form-group textarea{min-height:44px;font-size:1rem;padding:10px 12px}
+  .form-actions{gap:8px}
+  .btn{min-height:42px;padding:9px 12px;font-size:.82rem;justify-content:center}
+  .btn-sm{min-height:40px;padding:8px 11px}
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px}
+  table{min-width:620px;font-size:.82rem}
+  thead th,tbody td{padding:9px 10px;white-space:nowrap}
+  .actions-cell{flex-wrap:nowrap}
+  .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .stat-card{padding:12px 8px}
+  .stat-val{font-size:1.35rem}
+  .stat-label{font-size:.72rem}
+  .period-config-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .period-config-card{padding:11px 8px}
+  .wizard-overlay{padding:10px;align-items:flex-start;padding-top:68px}
+  .wizard-box{width:100%;max-width:none;max-height:calc(100vh - 82px);border-radius:14px}
+  .wizard-header{padding:17px 14px;border-radius:14px 14px 0 0}
+  .wizard-header h2{font-size:1.15rem}
+  .wizard-body{padding:15px}
+  .wizard-footer{padding:12px 15px;gap:8px}
+  .tt-grid{overflow:auto;max-width:100%;grid-auto-columns:minmax(88px,1fr);-webkit-overflow-scrolling:touch}
+  .tt-cell{min-height:62px;padding:7px 4px;font-size:.72rem}
+  .tt-header,.tt-day{padding:7px 4px;font-size:.72rem;white-space:nowrap}
+  .tt-cell .subj{font-size:.72rem}
+  .tt-cell .teacher{font-size:.64rem}
+  #tfAvailGrid,#cfAvailGrid,#sfAvailGrid{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+  #tfAvailGrid>div,#cfAvailGrid>div,#sfAvailGrid>div{min-width:560px}
+  .tag{min-height:40px;display:inline-flex;align-items:center;padding:8px 12px;margin:3px 2px}
+  .footer{padding:16px 12px;margin-top:auto;margin-bottom:8px}
+  .footer-content{gap:9px}
+  .footer-copy{font-size:.7rem;line-height:1.5}
+  #sec-backup .form-actions .btn{flex:1;min-width:145px}
+  .mobile-bottom-nav{position:fixed;display:flex;align-items:stretch;justify-content:space-around;gap:2px;left:0;right:0;bottom:0;height:var(--mobile-nav-h);padding:6px 4px calc(6px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);box-shadow:0 -4px 18px rgba(0,0,0,.10);z-index:1400}
+  .mobile-nav-item{flex:1;min-width:0;border:0;background:transparent;color:var(--text-light);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:3px 1px;border-radius:9px;font-size:.62rem;font-weight:600;line-height:1.05;cursor:pointer}
+  .mobile-nav-item .mni-icon{font-size:1.3rem;line-height:1}
+  .mobile-nav-item.active{color:var(--primary);background:var(--primary-lightest)}
+  .toast{left:10px;right:10px;top:64px;max-width:none;text-align:center}
+  .empty-msg{padding:28px 14px}
+}
+@media(max-width:380px){
+  .mobile-nav-item{font-size:.56rem}
+  .mobile-nav-item .mni-icon{font-size:1.15rem}
+  .card{padding:12px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+}
+
+</style>
+</head>
+<body>
+<header class="header">
+  <button class="hamburger" onclick="toggleSidebar()">☰</button>
+  <div class="logo">
+    <svg class="logo-mark" viewBox="0 0 64 64" role="img" aria-label="School logo">
+      <path d="M32 3 57 12v18c0 16-10 25-25 31C17 55 7 46 7 30V12L32 3Z" fill="#fff"/>
+      <path d="M15 25 32 15l17 10-17 10-17-10Z" fill="#1565C0"/>
+      <path d="M20 30v12c4 4 20 4 24 0V30l-12 7-12-7Z" fill="#0D47A1"/>
+      <path d="M32 22v18" stroke="#F4B400" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="49" cy="45" r="9" fill="#F4B400"/>
+      <path d="M49 40v6l4 2" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="logo-text"><div class="logo-title" id="headerTitle"></div><div class="logo-school" id="headerSchoolName"></div></div>
+  </div>
+  <div class="header-right">
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn active" onclick="setLang('ps')">پښتو</button>
+    <button class="lang-btn" onclick="setLang('fa')">دری</button>
+    <button class="lang-btn" onclick="setLang('ar')">عربي</button>
+  </div>
+</header>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <svg class="school-mark" viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M32 3 57 12v18c0 16-10 25-25 31C17 55 7 46 7 30V12L32 3Z" fill="#fff"/>
+      <path d="M15 25 32 15l17 10-17 10-17-10Z" fill="#1565C0"/>
+      <path d="M20 30v12c4 4 20 4 24 0V30l-12 7-12-7Z" fill="#0D47A1"/>
+      <path d="M32 22v18" stroke="#F4B400" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="49" cy="45" r="9" fill="#F4B400"/><path d="M49 40v6l4 2" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="sidebar-brand-text"><div class="sidebar-brand-title" id="sidebarSchoolName">د ښوونځي سیستم</div><div class="sidebar-brand-sub" id="sidebarBrandSub"></div></div>
+  </div>
+  <div class="sidebar-section-title" data-i18n="snavigation">NAVIGATION</div>
+  <div class="menu-item active" onclick="showSection('dashboard')" data-section="dashboard"><span class="mi-icon">📊</span><span class="mi-text" data-i18n="mdashboard">Dashboard</span><span class="mi-arrow">›</span></div>
+  <div class="menu-item" onclick="showSection('setup')" data-section="setup"><span class="mi-icon">⚙️</span><span class="mi-text" data-i18n="msetup">School Setup</span><span class="mi-arrow">›</span></div>
+  <div class="menu-item" onclick="showSection('periods')" data-section="periods"><span class="mi-icon">🕐</span><span class="mi-text" data-i18n="mperiods">Periods & Timing</span><span class="mi-arrow">›</span></div>
+  <div class="menu-item" onclick="showSection('subjects')" data-section="subjects"><span class="mi-icon">📖</span><span class="mi-text" data-i18n="msubjects">Subjects</span><span class="mi-arrow">›</span></div>
+  <div class="menu-item" onclick="showSection('teachers')" data-section="teachers"><span class="mi-icon">👨‍🏫</span><span class="mi-text" data-i18n="mteachers">Teachers</span><span class="mi-arrow">›</span></div>
+  <div class="menu-item" onclick="showSection('classes')" data-section="classes"><span class="mi-icon">📚</span><span class="mi-text" data-i18n="mclasses">Classes</span><span class="mi-arrow">›</span></div>
+  <div class="menu-item" onclick="showSection('assignments')" data-section="assignments"><span class="mi-icon">📋</span><span class="mi-text" data-i18n="massignments">Assignments</span><span class="mi-arrow">›</span></div>
+  <div class="sidebar-section-title" data-i18n="stimetable">TIMETABLE</div>
+  <div class="menu-item" onclick="showSection('fulltt')" data-section="fulltt"><span class="mi-icon">📅</span><span class="mi-text" data-i18n="mfulltt">Full Timetable</span><span class="mi-arrow">›</span></div>
+  <div class="menu-item" onclick="showSection('classtt')" data-section="classtt"><span class="mi-icon">🎒</span><span class="mi-text" data-i18n="mclasstt">Class Timetable</span><span class="mi-arrow">›</span></div>
+  <div class="menu-item" onclick="showSection('teachertt')" data-section="teachertt"><span class="mi-icon">📝</span><span class="mi-text" data-i18n="mteachertt">Teacher Timetable</span><span class="mi-arrow">›</span></div>
+  <div class="menu-item" onclick="showSection('conflicts')" data-section="conflicts"><span class="mi-icon">⚠️</span><span class="mi-text" data-i18n="mconflicts">Conflicts</span><span class="mi-arrow">›</span></div>
+  <div class="menu-item" onclick="showSection('backup')" data-section="backup"><span class="mi-icon">💾</span><span class="mi-text" data-i18n="cbackup">Data Backup</span><span class="mi-arrow">›</span></div>
+  <div class="stats-mini" id="sidebarStats">
+    <div class="stat-row"><span data-i18n="st_teachers">ښوونکي</span><span class="stat-val" id="ssTeachers">0</span></div>
+    <div class="stat-row"><span data-i18n="st_classes">ټولګي</span><span class="stat-val" id="ssClasses">0</span></div>
+    <div class="stat-row"><span data-i18n="st_periods">دوري</span><span class="stat-val" id="ssPeriods">0</span></div>
+    <div class="stat-row"><span data-i18n="st_scheduled">مقرر</span><span class="stat-val" id="ssScheduled">0</span></div>
+  </div>
+</nav>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="Mobile navigation">
+  <button class="mobile-nav-item active" onclick="showSection('dashboard')" data-section="dashboard"><span class="mni-icon">📊</span><span data-i18n="mdashboard">Dashboard</span></button>
+  <button class="mobile-nav-item" onclick="showSection('subjects')" data-section="subjects"><span class="mni-icon">📖</span><span data-i18n="msubjects">Subjects</span></button>
+  <button class="mobile-nav-item" onclick="showSection('teachers')" data-section="teachers"><span class="mni-icon">👨‍🏫</span><span data-i18n="mteachers">Teachers</span></button>
+  <button class="mobile-nav-item" onclick="showSection('classes')" data-section="classes"><span class="mni-icon">📚</span><span data-i18n="mclasses">Classes</span></button>
+  <button class="mobile-nav-item" onclick="showSection('fulltt')" data-section="fulltt"><span class="mni-icon">📅</span><span data-i18n="mfulltt">Timetable</span></button>
+  <button class="mobile-nav-item" onclick="toggleSidebar()"><span class="mni-icon">☰</span><span data-i18n="mmore">More</span></button>
+</nav>
+
+<div class="main-area">
+<!-- DASHBOARD -->
+<div class="section active" id="sec-dashboard">
+  <div class="card" style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff">
+    <div style="display:flex;align-items:center;gap:16px">
+      <svg class="dashboard-brand" viewBox="0 0 64 64" role="img" aria-label="School logo">
+        <path d="M32 3 57 12v18c0 16-10 25-25 31C17 55 7 46 7 30V12L32 3Z" fill="#fff"/>
+        <path d="M15 25 32 15l17 10-17 10-17-10Z" fill="#1565C0"/>
+        <path d="M20 30v12c4 4 20 4 24 0V30l-12 7-12-7Z" fill="#0D47A1"/>
+        <path d="M32 22v18" stroke="#F4B400" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="49" cy="45" r="9" fill="#F4B400"/><path d="M49 40v6l4 2" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div><h2 id="dashWelcome" style="font-size:1.4rem" data-i18n="dwelcome">ښه راغلاست</h2><p style="opacity:.85;margin-top:4px" id="dashSubtitle" data-i18n="dashsubtitle">د ښوونځي د تقسيم اوقات سیسټم</p></div>
+    </div>
+  </div>
+  <div class="stats-grid" id="dashStats">
+    <div class="stat-card"><div class="stat-icon">👨‍🏫</div><div class="stat-val" id="dsTeachers">0</div><div class="stat-label" data-i18n="ds_teachers">ټول ښوونکي</div></div>
+    <div class="stat-card"><div class="stat-icon">📚</div><div class="stat-val" id="dsClasses">0</div><div class="stat-label" data-i18n="ds_classes">ټول ټولګي</div></div>
+    <div class="stat-card"><div class="stat-icon">📖</div><div class="stat-val" id="dsSubjects">0</div><div class="stat-label" data-i18n="ds_subjects">ټول مضامین</div></div>
+    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-val" id="dsWeekPeriods">0</div><div class="stat-label" data-i18n="ds_weekperiods">اونیزه دوري</div></div>
+    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-val" id="dsScheduled">0</div><div class="stat-label" data-i18n="ds_scheduled">مقرر شوي</div></div>
+    <div class="stat-card"><div class="stat-icon">❌</div><div class="stat-val" id="dsUnscheduled">0</div><div class="stat-label" data-i18n="ds_unscheduled">نامقرر</div></div>
+    <div class="stat-card"><div class="stat-icon">⚠️</div><div class="stat-val" id="dsConflicts">0</div><div class="stat-label" data-i18n="ds_conflicts">ټکرونه</div></div>
+    <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val" id="dsPercent">0%</div><div class="stat-label" data-i18n="ds_completion">بشپړتیا</div></div>
+  </div>
+  <div class="card" style="text-align:center">
+    <button class="btn btn-danger btn-sm" onclick="if(confirm('Reset ALL data? / ټول معلومات پاک کړئ؟')){localStorage.removeItem('schoolTT');location.reload()}">🔄 <span data-i18n="bresetall">ټول معلومات پاک کړئ</span></button>
+  </div>
+</div>
+
+<!-- SCHOOL SETUP -->
+<div class="section" id="sec-setup">
+  <div class="card">
+    <div class="card-header"><div><div class="card-title">⚙️ <span data-i18n="cschoolinfo">د ښوونځي معلومات</span></div><div class="card-subtitle" data-i18n="cschoolinfosub">خپل د ښوونځي معلومات ولیکئ</div></div></div>
+    <div class="form-grid">
+      <div class="form-group"><label data-i18n="lschoolname">🏫 د ښوونځي نوم</label><input type="text" id="schoolName"></div>
+      <div class="form-group"><label data-i18n="lschooltype">📋 د ښوونځي ډول</label><select id="schoolType"><option value="primary" data-i18n="opt_primary">ابتدايي</option><option value="middle" data-i18n="opt_middle">متوسطه</option><option value="high" data-i18n="opt_high">لیسه</option></select></div>
+      <div class="form-group"><label data-i18n="lstarttime">🕐 د پیل وخت</label><input type="time" id="startTime" value="07:30"></div>
+      <div class="form-group"><label data-i18n="lperioddur">⏱️ د دورې موده (دقیقې)</label><input type="number" id="periodDuration" value="45" min="30" max="120"></div>
+    </div>
+    <div class="form-actions mt-md"><button class="btn btn-primary" onclick="saveSchoolInfo()">💾 <span data-i18n="bsave">خوندي کول</span></button></div>
+  </div>
+</div>
+
+<!-- BACKUP -->
+<div class="section" id="sec-backup">
+  <div class="card">
+    <div class="card-header"><div><div class="card-title">💾 <span data-i18n="cbackup">د معلوماتو بیک اپ</span></div><div class="card-subtitle" data-i18n="cbackupsub">معلومات فایل ته صادر کړئ او بېرته یې وارد کړئ.</div></div></div>
+    <div class="form-actions" style="margin:0">
+      <button class="btn btn-export" onclick="exportDataBackup()">⬇️ <span data-i18n="bbackup">بیک اپ صادرول</span></button>
+      <button class="btn btn-outline" onclick="document.getElementById('backupFileInput').click()">⬆️ <span data-i18n="brestore">بیک اپ واردول</span></button>
+      <input id="backupFileInput" type="file" accept="application/json,.json" hidden onchange="importDataBackup(event)">
+    </div>
+  </div>
+</div>
+
+<!-- PERIODS -->
+<div class="section" id="sec-periods">
+  <div class="card">
+    <div class="card-header"><div><div class="card-title">🕐 <span data-i18n="cperiodconfig">د دورو امستنه</span></div><div class="card-subtitle" data-i18n="cperiodconfigsub">د هرې ورځې دوري ولیکئ. جمعه بند دي.</div></div></div>
+    <div class="period-config-grid" id="periodConfigGrid"></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div><div class="card-title">☕ <span data-i18n="cbreakconfig">د استراحت امستنه</span></div><div class="card-subtitle" data-i18n="cbreakconfigsub">استراحت د کومې دورې نه وروسته او څو دقیقې</div></div></div>
+    <div class="form-grid">
+      <div class="form-group"><label data-i18n="lafterperiod">استراحت له کومې دورې وروسته</label><input type="number" id="breakAfterPeriod" value="3" min="1" max="8"></div>
+      <div class="form-group"><label data-i18n="lbreakdur">استراحت موده (دقیقې)</label><input type="number" id="breakDuration" value="15" min="5" max="60"></div>
+    </div>
+    <div class="form-actions mt-md"><button class="btn btn-primary" onclick="savePeriodConfig()">💾 <span data-i18n="bsave">خوندي کول</span></button></div>
+  </div>
+</div>
+
+<!-- SUBJECTS -->
+<div class="section" id="sec-subjects">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">📖 <span data-i18n="csubjectmgmt">د مضامینو اداره</span></div><div class="card-subtitle" data-i18n="csubjectmgmtsub">مضامین اضافه، سمون او ړنګول</div></div>
+      <button class="btn btn-primary btn-sm" onclick="showSubjectForm()">+ <span data-i18n="baddsubject">مطلب اضافه</span></button>
+    </div>
+    <div id="subjectForm" class="hidden" style="background:#F8FAFE;border:1.5px solid var(--primary-lighter);border-radius:var(--radius-sm);padding:16px;margin-bottom:16px">
+      <h4 style="margin-bottom:12px;color:var(--primary)" data-i18n="h4addsubject">مطلب اضافه/سمون</h4>
+      <div class="form-grid">
+        <div class="form-group"><label data-i18n="lsubjname">📖 د مطلب نوم</label><input type="text" id="sfName" placeholder="مثال: رياضي"></div>
+      </div>
+      <div class="form-group mt-sm">
+        <label data-i18n="lsubjunavailable">ناممکنې دورې (کلیک وکړئ)</label>
+        <div id="sfAvailGrid" style="margin-top:6px"></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-success" onclick="saveSubject()">✅ <span data-i18n="bsave">خوندي کول</span></button>
+        <button class="btn btn-outline" onclick="cancelSubjectForm()">✖ <span data-i18n="bcancel">لغوه</span></button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table><thead><tr><th>#</th><th data-i18n="thsubjectname">د مطلب نوم</th><th data-i18n="thactions">کړنې</th></tr></thead><tbody id="subjectsBody"></tbody></table>
+    </div>
+    <div id="subjectsPagination"></div>
+    <div id="noSubjects" class="empty-msg"><div class="em-icon">📖</div><div data-i18n="notsubjects">تر اوس هیڅ مطلب نه دی اضافه شوی.</div></div>
+  </div>
+</div>
+
+<!-- TEACHERS -->
+<div class="section" id="sec-teachers">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">👨‍🏫 <span data-i18n="cteacherreg">د ښوونکو ثبت</span></div><div class="card-subtitle" data-i18n="cteacherregsub">هر څومره ښوونکي چې اړتیا وي اضافه کړئ</div></div>
+      <button class="btn btn-primary btn-sm" onclick="showTeacherForm()">+ <span data-i18n="baddteacher">ښوونکی اضافه</span></button>
+    </div>
+    <div id="teacherForm" class="hidden" style="background:#F8FAFE;border:1.5px solid var(--primary-lighter);border-radius:var(--radius-sm);padding:16px;margin-bottom:16px">
+      <h4 style="margin-bottom:12px;color:var(--primary)" data-i18n="h4addteacher">ښوونکی اضافه/سمون</h4>
+      <div class="form-grid">
+        <div class="form-group"><label data-i18n="lname">نوم</label><input type="text" id="tfName"></div>
+        <div class="form-group"><label data-i18n="lmaxdaily">ترټوله ورځنۍ دوري</label><input type="number" id="tfMaxDaily" value="6" min="1" max="8"></div>
+        <div class="form-group"><label data-i18n="lmaxweekly">ترټوله اونیزه دوري</label><input type="number" id="tfMaxWeekly" value="30" min="1" max="42"></div>
+      </div>
+      <div class="form-group mt-sm">
+        <label data-i18n="ltsubjects">مضامین (کلیک وکړئ)</label>
+        <div id="tfSubjectTags" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px"></div>
+      </div>
+      <div class="form-group mt-sm">
+        <label data-i18n="lunavailable">ناممکنې دوري (کلیک وکړئ)</label>
+        <div id="tfAvailGrid" style="margin-top:6px"></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-success" onclick="saveTeacher()">✅ <span data-i18n="bsave">خوندي کول</span></button>
+        <button class="btn btn-outline" onclick="cancelTeacherForm()">✖ <span data-i18n="bcancel">لغوه</span></button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table><thead><tr><th>#</th><th data-i18n="thname">نوم</th><th data-i18n="thsubjects">مضامین</th><th data-i18n="thmaxdaily">ورځنۍ</th><th data-i18n="thmaxweekly">اونیزه</th><th data-i18n="thactions">کړنې</th></tr></thead><tbody id="teachersBody"></tbody></table>
+    </div>
+    <div id="teachersPagination"></div>
+    <div id="noTeachers" class="empty-msg"><div class="em-icon">👨‍🏫</div><div data-i18n="notteachers">تر اوس هیڅ ښوونکی نه دی اضافه شوی.</div></div>
+  </div>
+</div>
+
+<!-- CLASSES -->
+<div class="section" id="sec-classes">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">📚 <span data-i18n="cclassreg">د ټولګي ثبت</span></div><div class="card-subtitle" data-i18n="cclassregsub">هر څومره ټولګي چې اړتیا وي اضافه کړئ</div></div>
+      <button class="btn btn-primary btn-sm" onclick="showClassForm()">+ <span data-i18n="baddclass">ټولګی اضافه</span></button>
+    </div>
+    <div id="classForm" class="hidden" style="background:#F8FAFE;border:1.5px solid var(--primary-lighter);border-radius:var(--radius-sm);padding:16px;margin-bottom:16px">
+      <div class="form-grid">
+        <div class="form-group"><label data-i18n="lclassname">د ټولګي نوم</label><input type="text" id="cfName" placeholder="مثال: صنف ۱۰ الف"></div>
+        <div class="form-group"><label data-i18n="lclassgrade">کچه</label><input type="text" id="cfGrade" placeholder="مثال: ۱۰"></div>
+      </div>
+      <div class="form-group" style="margin-top:12px">
+        <label data-i18n="lclassunavailable">ناممکنې دورې (کلیک وکړئ)</label>
+        <div id="cfAvailGrid"></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-success" onclick="saveClass()">✅ <span data-i18n="bsave">خوندي کول</span></button>
+        <button class="btn btn-outline" onclick="cancelClassForm()">✖ <span data-i18n="bcancel">لغوه</span></button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table><thead><tr><th>#</th><th data-i18n="thclassname">د ټولګي نوم</th><th data-i18n="thgrade">کچه</th><th data-i18n="thactions">کړنې</th></tr></thead><tbody id="classesBody"></tbody></table>
+    </div>
+    <div id="classesPagination"></div>
+    <div id="noClasses" class="empty-msg"><div class="em-icon">📚</div><div data-i18n="notclasses">تر اوس هیڅ ټولګی نه دی اضافه شوی.</div></div>
+  </div>
+</div>
+
+<!-- ASSIGNMENTS -->
+<div class="section" id="sec-assignments">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">📋 <span data-i18n="csubjectassign">د مضامینو درسي ساعتونه</span></div><div class="card-subtitle" data-i18n="csubjectassignsub">مضامین ټولګیو ته ورکړئ</div></div>
+      <button class="btn btn-primary btn-sm" onclick="showAssignmentForm()">+ <span data-i18n="baddassign">درسي ساعت اضافه</span></button>
+    </div>
+    <div id="assignForm" class="hidden" style="background:#F8FAFE;border:1.5px solid var(--primary-lighter);border-radius:var(--radius-sm);padding:16px;margin-bottom:16px">
+      <div class="form-grid">
+        <div class="form-group"><label data-i18n="lclass">ټولګی</label><select id="afClass"></select></div>
+        <div class="form-group"><label data-i18n="lsubject">مطلب</label><select id="afSubject"></select></div>
+        <div class="form-group"><label data-i18n="lteacher">ښوونکی</label><select id="afTeacher"></select></div>
+        <div class="form-group"><label data-i18n="lweeklyperiods">اونیزه دوري</label><input type="number" id="afPeriods" value="4" min="1" max="12"></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-success" onclick="saveAssignment()">✅ <span data-i18n="bsave">خوندي کول</span></button>
+        <button class="btn btn-outline" onclick="cancelAssignForm()">✖ <span data-i18n="bcancel">لغوه</span></button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table><thead><tr><th>#</th><th data-i18n="thclass">ټولګی</th><th data-i18n="thsubject">مطلب</th><th data-i18n="thteacher">ښوونکی</th><th data-i18n="thperiodsweek">اونیزه</th><th data-i18n="thscheduled">مقرر</th><th data-i18n="thactions">کړنې</th></tr></thead><tbody id="assignBody"></tbody></table>
+    </div>
+    <div id="assignmentsPagination"></div>
+    <div id="noAssignments" class="empty-msg"><div class="em-icon">📋</div><div data-i18n="notassign">تر اوس هیڅ درسي ساعت نشته.</div></div>
+  </div>
+</div>
+
+<!-- FULL TIMETABLE -->
+<div class="section" id="sec-fulltt">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">📅 <span data-i18n="cfulltimetable">ټول تقسيم اوقات</span></div><div class="card-subtitle" data-i18n="cfulltimetablesub">د ټولو ټولګیو تقسيم اوقات</div></div>
+      <div class="form-actions" style="margin:0">
+        <button class="btn btn-success" onclick="generateTimetable()">⚡ <span data-i18n="bgenerate">جوړول</span></button>
+        <button class="btn btn-warning" onclick="checkConflicts()">⚠️ <span data-i18n="bcheckconflicts">ټکرونه وګورئ</span></button>
+        <button class="btn btn-danger" onclick="clearTimetable()">🗑️ <span data-i18n="bclear">پاکول</span></button>
+        <button class="btn btn-export" onclick="exportFullTimetableXLSX()">📊 <span data-i18n="bexportxlsx">Excel صادر</span></button>
+        <button class="btn btn-info" onclick="printSection('fullttPrint')">🖨️ <span data-i18n="bprint">پرینټ</span></button>
+      </div>
+    </div>
+    <div id="fullttPrint"><div id="fullttContent" style="overflow-x:auto"><div class="empty-msg"><div class="em-icon">📅</div><div data-i18n="notimetable">تر اوس تقسيم اوقات نه دی جوړ شوی.</div></div></div></div>
+  </div>
+</div>
+
+<!-- CLASS TIMETABLE -->
+<div class="section" id="sec-classtt">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">🎒 <span data-i18n="cclasstimetable">د ټولګي تقسيم اوقات</span></div></div>
+      <div class="form-actions" style="margin:0">
+        <select id="classttSelect" onchange="showClassTimetable()" style="padding:8px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--border)"></select>
+        <button class="btn btn-export" onclick="exportClassTimetableXLSX()">📊 <span data-i18n="bexportxlsx">Excel</span></button>
+        <button class="btn btn-info" onclick="printSection('classttPrint')">🖨️</button>
+      </div>
+    </div>
+    <div id="classttPrint"><div id="classttContent"><div class="empty-msg"><div class="em-icon">🎒</div><div data-i18n="noselectclass">ټولګی غوره کړئ.</div></div></div></div>
+  </div>
+</div>
+
+<!-- TEACHER TIMETABLE -->
+<div class="section" id="sec-teachertt">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">📝 <span data-i18n="cteachertimetable">د ښوونکي تقسيم اوقات</span></div></div>
+      <div class="form-actions" style="margin:0">
+        <select id="teacherttSelect" onchange="showTeacherTimetable()" style="padding:8px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--border)"></select>
+        <button class="btn btn-export" onclick="exportTeacherTimetableXLSX()">📊 <span data-i18n="bexportxlsx">Excel</span></button>
+        <button class="btn btn-info" onclick="printSection('teacherttPrint')">🖨️</button>
+      </div>
+    </div>
+    <div id="teacherttPrint"><div id="teacherttContent"><div class="empty-msg"><div class="em-icon">📝</div><div data-i18n="noselectteacher">ښوونکی غوره کړئ.</div></div></div></div>
+    <div id="teacherStats" class="hidden" style="margin-top:12px"><div class="stats-grid" id="teacherStatsGrid"></div></div>
+  </div>
+</div>
+
+<!-- CONFLICTS -->
+<div class="section" id="sec-conflicts">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">⚠️ <span data-i18n="cconflictreport">د ټکرونو راپور</span></div><div class="card-subtitle" data-i18n="cconflictreportsub">د تقسيم اوقات ستونزې</div></div>
+      <button class="btn btn-warning btn-sm" onclick="checkConflicts()">🔄 <span data-i18n="brecheck">بیا وګورئ</span></button>
+    </div>
+    <div id="conflictContent"><div class="empty-msg"><div class="em-icon">✅</div><div data-i18n="noconflicts">تقسيم اوقات جوړ کړئ او بیا وګورئ.</div></div></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-left">
+      <div class="footer-title" data-i18n="ftitle">🏫 د ښوونځي تقسيم اوقات</div>
+      <div class="footer-subtitle" id="footerAppName"></div>
+    </div>
+    <div class="footer-contact">
+      <div><strong data-i18n="fdeveloper">جوړونکی:</strong> عبدالسلام رحيمي (Abdul Salam Rahimi)</div>
+      <a href="mailto:salamraihan53@gmail.com">📧 salamraihan53@gmail.com</a>
+      <a href="https://wa.me/93747844817" target="_blank">📱 +93 747 844 817 (WhatsApp)</a>
+    </div>
+  </div>
+  <div class="footer-copy" data-i18n="fcopy">© <span id="currentYear">2026</span> عبدالسلام رحيمي. ټول حقونه خوندي دي.</div>
+</footer>
+</div>
+
+<!-- WIZARD -->
+<div class="wizard-overlay" id="wizardOverlay">
+  <div class="wizard-box">
+    <div class="wizard-header">
+      <h2>🏫 <span data-i18n="wtitle">د ښوونځي امستنه</span></h2>
+      <p data-i18n="wsubtitle">خپل ښوونځی په اسانه ګامونو امستئ</p>
+      <div class="step-dots" id="wizDots"></div>
+    </div>
+    <div class="wizard-body">
+      <div class="wizard-step active" data-step="1">
+        <h3 style="margin-bottom:14px;color:var(--primary)">📋 <span data-i18n="wstep1">لومړی ګام: د ښوونځي معلومات</span></h3>
+        <div class="form-grid">
+          <div class="form-group"><label data-i18n="lschoolname">🏫 د ښوونځي نوم</label><input type="text" id="wizSchoolName"></div>
+          <div class="form-group"><label data-i18n="lschooltype">📋 د ښوونځي ډول</label><select id="wizSchoolType"><option value="primary">ابتدايي</option><option value="middle">متوسطه</option><option value="high">لیسه</option></select></div>
+          <div class="form-group"><label data-i18n="lstarttime">🕐 د پیل وخت</label><input type="time" id="wizStartTime" value="07:30"></div>
+          <div class="form-group"><label data-i18n="lperioddur">⏱️ د دورې موده (دقیقې)</label><input type="number" id="wizPeriodDur" value="45" min="30" max="120"></div>
+        </div>
+      </div>
+      <div class="wizard-step" data-step="2">
+        <h3 style="margin-bottom:14px;color:var(--primary)">🕐 <span data-i18n="wstep2">دویم ګام: دوري او وخت</span></h3>
+        <p class="text-sm text-muted mb-sm" data-i18n="wstep2desc">د هرې ورځې دوري ولیکئ. جمعه بند دي.</p>
+        <div class="period-config-grid" id="wizPeriodGrid"></div>
+        <div class="form-grid mt-md">
+          <div class="form-group"><label data-i18n="lafterperiod">☕ استراحت له کومې دورې وروسته</label><input type="number" id="wizBreakAfter" value="3" min="1" max="8"></div>
+          <div class="form-group"><label data-i18n="lbreakdur">⏱️ استراحت موده (دقیقې)</label><input type="number" id="wizBreakDur" value="15" min="5" max="60"></div>
+        </div>
+      </div>
+      <div class="wizard-step" data-step="3">
+        <h3 style="margin-bottom:14px;color:var(--primary)">🌐 <span data-i18n="wstep3">دریم ګام: ژبه</span></h3>
+        <p class="text-sm text-muted mb-sm" data-i18n="wstep3desc">خپله ژبه غوره کړئ.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
+          <button class="btn btn-outline" onclick="setLang('en')" style="flex:1;min-width:100px">🇬🇧 English</button>
+          <button class="btn btn-outline" onclick="setLang('ps')" style="flex:1;min-width:100px">🇦🇫 پښتو</button>
+          <button class="btn btn-outline" onclick="setLang('fa')" style="flex:1;min-width:100px">🇦🇫 دری</button>
+          <button class="btn btn-outline" onclick="setLang('ar')" style="flex:1;min-width:100px">🇸🇦 عربي</button>
+        </div>
+      </div>
+    </div>
+    <div class="wizard-footer">
+      <button class="btn btn-outline" id="wizPrev" onclick="wizNav(-1)" disabled>← <span data-i18n="bprev">مخکنی</span></button>
+      <button class="btn btn-primary" id="wizNext" onclick="wizNav(1)"><span data-i18n="bnext">بل</span> →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STATE = {
+  school:{name:'',type:'primary',startTime:'07:30',periodDuration:45},
+  days:['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday'],
+  daysAr:['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس'],
+  daysPs:['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه'],
+  daysFa:['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه'],
+  periodsPerDay:{Saturday:6,Sunday:6,Monday:6,Tuesday:6,Wednesday:6,Thursday:6},
+  breakAfterPeriod:3,breakDuration:15,
+  subjects:[
+    {id:'s1',name:'رياضي',nameEn:'Mathematics'},
+    {id:'s2',name:'فیزیک',nameEn:'Physics'},
+    {id:'s3',name:'کيميا',nameEn:'Chemistry'},
+    {id:'s4',name:'ژوند پوهنه',nameEn:'Biology'},
+    {id:'s5',name:'انګلیسي',nameEn:'English'},
+    {id:'s6',name:'پښتو',nameEn:'Pashto'},
+    {id:'s7',name:'دري',nameEn:'Dari'},
+    {id:'s8',name:'عربي',nameEn:'Arabic'},
+    {id:'s9',name:'اسلامي تعلیمات',nameEn:'Islamic Studies'},
+    {id:'s10',name:'تاريخ',nameEn:'History'},
+    {id:'s11',name:'جغرافیه',nameEn:'Geography'},
+    {id:'s12',name:'کمپیوټر پوهنه',nameEn:'Computer Science'},
+    {id:'s13',name:'هنر',nameEn:'Art'},
+    {id:'s14',name:'بدني روزنه',nameEn:'Physical Education'}
+  ],
+  teachers:[],classes:[],assignments:[],
+  timetable:null,conflicts:[],
+  currentEditTeacher:null,currentEditClass:null,currentEditAssign:null,currentEditSubject:null,
+  wizStep:1,initialized:false,
+  pageState:{
+    teachers:{page:1,size:10},
+    classes:{page:1,size:10},
+    subjects:{page:1,size:10},
+    assignments:{page:1,size:10}
+  }
+};
+let currentLang = 'ps';
+
+// ===== APP NAME (central, multilingual) =====
+const APP_NAMES = {
+  ps:'ياران درسي مهالوېش',
+  fa:'تقسيم اوقات درسي ياران',
+  ar:'الجدول الدراسي ياران',
+  en:'Yaraan Timetable'
+};
+function appName(){ return APP_NAMES[currentLang]||APP_NAMES.en; }
+function updateAppName(){
+  const n=appName();
+  document.title='🏫 '+n;
+  const h=document.getElementById('headerTitle'); if(h)h.textContent=n;
+  const sb=document.getElementById('sidebarBrandSub'); if(sb)sb.textContent=n;
+  const f=document.getElementById('footerAppName'); if(f)f.textContent=n;
+}
+function printHeaderHTML(){
+  const school=(STATE.school&&STATE.school.name||'').trim();
+  return `<div class="print-only-title"><div class="pot-app">🏫 ${appName()}</div>${school?`<div class="pot-school">${school}</div>`:''}</div>`;
+}
+function printFooterHTML(){
+  return `<div class="print-only-footer">${appName()} — ${new Date().toLocaleDateString()}</div>`;
+}
+
+// ===== PAGINATION =====
+function getPageState(key){
+  if(!STATE.pageState) STATE.pageState={};
+  if(!STATE.pageState[key]) STATE.pageState[key]={page:1,size:10};
+  return STATE.pageState[key];
+}
+function paginateList(list,key){
+  const ps=getPageState(key);
+  const total=list.length;
+  const size=ps.size==='all'?Math.max(total,1):ps.size;
+  const totalPages=Math.max(1,Math.ceil(total/size));
+  if(ps.page>totalPages)ps.page=totalPages;
+  if(ps.page<1)ps.page=1;
+  const start=(ps.page-1)*size;
+  const end=ps.size==='all'?total:Math.min(total,start+size);
+  return{items:list.slice(start,end),start,end,total,page:ps.page,totalPages};
+}
+function renderPaginationBar(key,info){
+  if(info.total===0)return'';
+  const ps=getPageState(key);
+  const sizes=[10,20,50,100,'all'];
+  const sizeOptions=sizes.map(s=>`<option value="${s}" ${String(ps.size)===String(s)?'selected':''}>${s==='all'?t('pg_all'):s}</option>`).join('');
+  return`<div class="pagination-bar">
+    <div class="pg-size"><span>${t('pg_perpage')}</span><select onchange="setPageSize('${key}',this.value)">${sizeOptions}</select></div>
+    <div class="pg-info">${t('pg_showing')} ${info.total===0?0:info.start+1}–${info.end} ${t('pg_of')} ${info.total}</div>
+    <div class="pg-nav">
+      <button class="btn btn-sm btn-outline" ${info.page<=1?'disabled':''} onclick="changePage('${key}',-1)">← ${t('pg_prev')}</button>
+      <span class="pg-current">${info.page} / ${info.totalPages}</span>
+      <button class="btn btn-sm btn-outline" ${info.page>=info.totalPages?'disabled':''} onclick="changePage('${key}',1)">${t('pg_next')} →</button>
+    </div>
+  </div>`;
+}
+function setPageSize(key,val){
+  const ps=getPageState(key);
+  ps.size=val==='all'?'all':parseInt(val);
+  ps.page=1;
+  renderByPageKey(key);
+}
+function changePage(key,delta){
+  const ps=getPageState(key);
+  ps.page+=delta;
+  renderByPageKey(key);
+}
+function renderByPageKey(key){
+  if(key==='teachers')renderTeachers();
+  else if(key==='classes')renderClasses();
+  else if(key==='subjects')renderSubjects();
+  else if(key==='assignments')renderAssignments();
+}
+
+// ===== i18n =====
+const i18n = {
+  en:{
+    snavigation:'NAVIGATION',stimetable:'TIMETABLE',
+    mdashboard:'Dashboard',msetup:'School Setup',mperiods:'Periods & Timing',msubjects:'Subjects',
+    mteachers:'Teachers',mclasses:'Classes',massignments:'Assignments',
+    mfulltt:'Full Timetable',mclasstt:'Class Timetable',mteachertt:'Teacher Timetable',mconflicts:'Conflicts',
+    st_teachers:'Teachers',st_classes:'Classes',st_periods:'Periods',st_scheduled:'Scheduled',
+    pg_showing:'Showing',pg_of:'of',pg_prev:'Previous',pg_next:'Next',pg_all:'All',pg_perpage:'Per page',
+    dwelcome:'Welcome to School Timetable Generator',dashsubtitle:'Complete automated scheduling for Afghan schools',
+    ds_teachers:'Total Teachers',ds_classes:'Total Classes',ds_subjects:'Total Subjects',
+    ds_weekperiods:'Weekly Periods',ds_scheduled:'Scheduled',ds_unscheduled:'Unscheduled',
+    ds_conflicts:'Conflicts',ds_completion:'Completion',
+    cschoolinfo:'School Information',cschoolinfosub:'Enter your school details',
+    lschoolname:'School Name',lschooltype:'School Type',lstarttime:'Start Time',lperioddur:'Period Duration (min)',
+    opt_primary:'Primary (ابتدایي)',opt_middle:'Middle (متوسطه)',opt_high:'High (لیسه)',
+    cperiodconfig:'Period Configuration',cperiodconfigsub:'Set periods per day. Friday is off.',
+    cbreakconfig:'Break Configuration',cbreakconfigsub:'Break after which period, duration',
+    lafterperiod:'Break After Period #',lbreakdur:'Break Duration (min)',
+    csubjectmgmt:'Subject Management',csubjectmgmtsub:'Add, edit and delete subjects',
+    baddsubject:'Add Subject',h4addsubject:'Add/Edit Subject',lsubjname:'Subject Name',lsubjunavailable:'Unavailable Periods (click cells)',
+    cteacherreg:'Teacher Registration',cteacherregsub:'Add as many teachers as you need',
+    baddteacher:'Add Teacher',h4addteacher:'Add/Edit Teacher',lname:'Name',
+    lmaxdaily:'Max Daily Periods',lmaxweekly:'Max Weekly Periods',
+    ltsubjects:'Subjects (click to toggle)',lunavailable:'Unavailable Periods (click cells)',lclassunavailable:'Unavailable Periods (click cells)',available_label:'Available',unavailable_label:'Unavailable',
+    bsave:'Save',bcancel:'Cancel',bdelete:'Delete',bedit:'Edit',
+    thname:'Name',thsubjects:'Subjects',thsubjectname:'Subject Name',thmaxdaily:'Max/Day',thmaxweekly:'Max/Week',thactions:'Actions',
+    notteachers:'No teachers added yet.',notsubjects:'No subjects added yet.',
+    cclassreg:'Class Registration',cclassregsub:'Add as many classes as you need',
+    baddclass:'Add Class',lclassname:'Class Name',lclassgrade:'Grade',
+    thclassname:'Class Name',thgrade:'Grade',notclasses:'No classes added yet.',
+    csubjectassign:'Subject Assignment',csubjectassignsub:'Assign subjects to classes',
+    baddassign:'Add Assignment',lclass:'Class',lsubject:'Subject',lteacher:'Teacher',lweeklyperiods:'Weekly Periods',
+    thclass:'Class',thsubject:'Subject',thteacher:'Teacher',thperiodsweek:'Per/Week',thscheduled:'Scheduled',
+    notassign:'No assignments yet.',
+    cfulltimetable:'Full Timetable',cfulltimetablesub:'Complete timetable for all classes',
+    bgenerate:'Generate',bcheckconflicts:'Check Conflicts',bclear:'Clear',bprint:'Print',bexportxlsx:'Export Excel',cbackup:'Data Backup',cbackupsub:'Export your data to a file and restore it later.',bbackup:'Export Backup',brestore:'Import Backup',mmore:'More',
+    notimetable:'No timetable yet. Click "Generate".',
+    cclasstimetable:'Class Timetable',noselectclass:'Select a class.',
+    cteachertimetable:'Teacher Timetable',noselectteacher:'Select a teacher.',
+    cconflictreport:'Conflict Report',cconflictreportsub:'Scheduling issues',
+    brecheck:'Re-Check',noconflicts:'Generate timetable first.',
+    ftitle:'School Timetable',fsubtitle:'د ښوونځي د تقسيم اوقات سیسټم',
+    fdeveloper:'Developer:',fcopy:'© <span id="currentYear">2026</span> Abdul Salam Rahimi. All rights reserved.',
+    wtitle:'School Setup',wsubtitle:'Configure your school',
+    wstep1:'Step 1: School Info',wstep2:'Step 2: Periods',wstep2desc:'Set periods per day.',
+    wstep3:'Step 3: Language',wstep3desc:'Choose language.',
+    bprev:'Previous',bnext:'Next',bfinish:'Finish',
+    toast_saved:'Saved!',toast_generated:'Timetable generated!',toast_cleared:'Cleared!',
+    toast_error:'Fill all fields!',toast_conflict_check:'Conflict check done!',
+    toast_exported:'Excel file downloaded!',
+    total_periods:'Total',teaching_periods:'Teaching',free_periods:'Free',
+    daily_periods:'Daily',weekly_periods:'Weekly',break_label:'☕ BREAK',
+    conflict_teacher:'Teacher Conflict',conflict_class:'Class Conflict',
+    conflict_missing:'Missing Periods',conflict_excess:'Excess',conflict_unavail:'Availability',conflict_unsched:'Unscheduled',
+    type_label:'Type:',generated_at:'Generated:'
+  },
+  ps:{
+    snavigation:'لارښوونه',stimetable:'تقسيم اوقات',
+    mdashboard:'ډشبورډ',msetup:'ښوونځي امستنې',mperiods:'دوري او وخت',msubjects:'مضامین',
+    mteachers:'ښوونکي',mclasses:'ټولګي',massignments:'درسي ساعتونه',
+    mfulltt:'ټول تقسيم اوقات',mclasstt:'د ټولګي تقسيم اوقات',mteachertt:'د ښوونکي تقسيم اوقات',mconflicts:'ټکرونه',
+    st_teachers:'ښوونکي',st_classes:'ټولګي',st_periods:'دوري',st_scheduled:'مقرر',
+    pg_showing:'ښودل کیږي',pg_of:'د',pg_prev:'مخکنی',pg_next:'بل',pg_all:'ټول',pg_perpage:'په هره پاڼه کې',
+    dwelcome:'د ښوونځي د تقسيم اوقات سیسټم ته ښه راغلاست',dashsubtitle:'د افغانستان د ښوونځیو لپاره تقسيم اوقات',
+    ds_teachers:'ټول ښوونکي',ds_classes:'ټول ټولګي',ds_subjects:'ټول مضامین',
+    ds_weekperiods:'اونیزه دوري',ds_scheduled:'مقرر شوي',ds_unscheduled:'نامقرر',
+    ds_conflicts:'ټکرونه',ds_completion:'بشپړتیا',
+    cschoolinfo:'د ښوونځي معلومات',cschoolinfosub:'خپل د ښوونځي معلومات ولیکئ',
+    lschoolname:'د ښوونځي نوم',lschooltype:'د ښوونځي ډول',lstarttime:'د پیل وخت',lperioddur:'د دورې موده (دقیقې)',
+    opt_primary:'ابتدايي',opt_middle:'متوسطه',opt_high:'لیسه',
+    cperiodconfig:'د دورو امستنه',cperiodconfigsub:'د هرې ورځې دوري ولیکئ. جمعه بند دي.',
+    cbreakconfig:'د استراحت امستنه',cbreakconfigsub:'استراحت د کومې دورې نه وروسته او څو دقیقې',
+    lafterperiod:'استراحت له کومې دورې وروسته',lbreakdur:'استراحت موده (دقیقې)',
+    csubjectmgmt:'د مضامینو اداره',csubjectmgmtsub:'مضامین اضافه، سمون او ړنګول',
+    baddsubject:'مطلب اضافه',h4addsubject:'مطلب اضافه/سمون',lsubjname:'د مطلب نوم',lsubjunavailable:'ناممکنې دوري (کلیک وکړئ)',
+    cteacherreg:'د ښوونکو ثبت',cteacherregsub:'هر څومره ښوونکي چې اړتیا وي اضافه کړئ',
+    baddteacher:'ښوونکی اضافه',h4addteacher:'ښوونکی اضافه/سمون',lname:'نوم',
+    lmaxdaily:'ترټوله ورځنۍ دوري',lmaxweekly:'ترټوله اونیزه دوري',
+    ltsubjects:'مضامین (کلیک وکړئ)',lunavailable:'ناممکنې دورې (کلیک وکړئ)',lclassunavailable:'ناممکنې دورې (کلیک وکړئ)',available_label:'خالي / شته',unavailable_label:'بنده / ناممکنه',
+    bsave:'خوندي کول',bcancel:'لغوه کول',bdelete:'ړنګول',bedit:'سمون',
+    thname:'نوم',thsubjects:'مضامین',thsubjectname:'د مطلب نوم',thmaxdaily:'ورځنۍ',thmaxweekly:'اونیزه',thactions:'کړنې',
+    notteachers:'تر اوس هیڅ ښوونکی نه دی اضافه شوی.',notsubjects:'تر اوس هیڅ مطلب نه دی اضافه شوی.',
+    cclassreg:'د ټولګي ثبت',cclassregsub:'هر څومره ټولګي چې اړتیا وي اضافه کړئ',
+    baddclass:'ټولګی اضافه',lclassname:'د ټولګي نوم',lclassgrade:'کچه',
+    thclassname:'د ټولګي نوم',thgrade:'کچه',notclasses:'تر اوس هیڅ ټولګی نه دی اضافه شوی.',
+    csubjectassign:'د مضامینو درسي ساعتونه',csubjectassignsub:'مضامین ټولګیو ته ورکړئ',
+    baddassign:'درسي ساعت اضافه',lclass:'ټولګی',lsubject:'مطلب',lteacher:'ښوونکی',lweeklyperiods:'اونیزه دوري',
+    thclass:'ټولګی',thsubject:'مطلب',thteacher:'ښوونکی',thperiodsweek:'اونیزه',thscheduled:'مقرر',
+    notassign:'تر اوس هیڅ درسي ساعت نشته.',
+    cfulltimetable:'ټول تقسيم اوقات',cfulltimetablesub:'د ټولو ټولګیو تقسيم اوقات',
+    bgenerate:'جوړول',bcheckconflicts:'ټکرونه وګورئ',bclear:'پاکول',bprint:'پرینټ',bexportxlsx:'Excel صادر',cbackup:'د معلوماتو بیک اپ',cbackupsub:'معلومات فایل ته صادر کړئ او وروسته یې بېرته وارد کړئ.',bbackup:'بیک اپ صادرول',brestore:'بیک اپ واردول',mmore:'نور',
+    notimetable:'تر اوس تقسيم اوقات نه دی جوړ شوی.',
+    cclasstimetable:'د ټولګي تقسيم اوقات',noselectclass:'ټولګی غوره کړئ.',
+    cteachertimetable:'د ښوونکي تقسيم اوقات',noselectteacher:'ښوونکی غوره کړئ.',
+    cconflictreport:'د ټکرونو راپور',cconflictreportsub:'د تقسيم اوقات ستونزې',
+    brecheck:'بیا وګورئ',noconflicts:'تقسيم اوقات جوړ کړئ او بیا وګورئ.',
+    ftitle:'د ښوونځي تقسيم اوقات',fsubtitle:'School Timetable Generator',
+    fdeveloper:'جوړونکی:',fcopy:'© <span id="currentYear">2026</span> عبدالسلام رحيمي. ټول حقونه خوندي دي.',
+    wtitle:'د ښوونځي امستنه',wsubtitle:'خپل ښوونځی امستئ',
+    wstep1:'لومړی ګام: د ښوونځي معلومات',wstep2:'دویم ګام: دوري او وخت',wstep2desc:'د هرې ورځې دوري ولیکئ.',
+    wstep3:'دریم ګام: ژبه',wstep3desc:'خپله ژبه غوره کړئ.',
+    bprev:'مخکنی',bnext:'بل',bfinish:'بشپړول',
+    toast_saved:'خوندي شو!',toast_generated:'تقسيم اوقات جوړ شو!',toast_cleared:'پاک شو!',
+    toast_error:'مهرباني وکړئ ټول معلومات ولیکئ!',toast_conflict_check:'د ټکرونو چک بشپړ شو!',
+    toast_exported:'Excel فايل ډاونلوډ شو!',
+    total_periods:'ټوله دوري',teaching_periods:'تدریس',free_periods:'آزاد',
+    daily_periods:'ورځنۍ',weekly_periods:'اونیزه',break_label:'☕ استراحت',
+    conflict_teacher:'د ښوونکي ټکر',conflict_class:'د ټولګي ټکر',
+    conflict_missing:'نیمګړي دوري',conflict_excess:'اضافه',conflict_unavail:'د شتون ستونزه',conflict_unsched:'نامقرر',
+    type_label:'ډول:',generated_at:'جوړ شو:'
+  },
+  fa:{
+    snavigation:'ناوبری',stimetable:'برنامه زمانی',
+    mdashboard:'داشبورد',msetup:'تنظیمات',mperiods:'زمان‌بندی',msubjects:'دروس',
+    mteachers:'معلمان',mclasses:'کلاس‌ها',massignments:'تخصیص‌ها',
+    mfulltt:'برنامه کامل',mclasstt:'برنامه کلاس',mteachertt:'برنامه معلم',mconflicts:'تداخل‌ها',
+    st_teachers:'معلمان',st_classes:'کلاس‌ها',st_periods:'دوره‌ها',st_scheduled:'مقرر',
+    pg_showing:'نمایش',pg_of:'از',pg_prev:'قبلی',pg_next:'بعدی',pg_all:'همه',pg_perpage:'در هر صفحه',
+    dwelcome:'به سیستم برنامه زمانی خوش آمدید',dashsubtitle:'برنامه‌ریزی خودکار مکاتب افغانستان',
+    ds_teachers:'کل معلمان',ds_classes:'کل کلاس‌ها',ds_subjects:'کل دروس',
+    ds_weekperiods:'دوره‌های هفتگی',ds_scheduled:'مقرر',ds_unscheduled:'نامقرر',
+    ds_conflicts:'تداخل‌ها',ds_completion:'تکمیل',
+    cschoolinfo:'اطلاعات مکتب',cschoolinfosub:'اطلاعات را وارد کنید',
+    lschoolname:'نام مکتب',lschooltype:'نوع مکتب',lstarttime:'ساعت شروع',lperioddur:'مدت دوره',
+    opt_primary:'ابتدایی',opt_middle:'متوسطه',opt_high:'دبیرستان',
+    cperiodconfig:'تنظیم دوره‌ها',cperiodconfigsub:'تعداد دوره‌ها. جمعه تعطیل.',
+    cbreakconfig:'تنظیم استراحت',cbreakconfigsub:'استراحت بعد از دوره',
+    lafterperiod:'بعد از دوره شماره',lbreakdur:'مدت استراحت',
+    csubjectmgmt:'مدیریت دروس',csubjectmgmtsub:'اضافه، ویرایش و حذف دروس',
+    baddsubject:'اضافه درس',h4addsubject:'اضافه/ویرایش درس',lsubjname:'نام درس',lsubjunavailable:'دوره‌های غیرقابل استفاده (کلیک کنید)',
+    cteacherreg:'ثبت معلمان',cteacherregsub:'به هر تعداد که نیاز دارید معلم اضافه کنید',
+    baddteacher:'اضافه معلم',h4addteacher:'اضافه/ویرایش معلم',lname:'نام',
+    lmaxdaily:'حداکثر روزانه',lmaxweekly:'حداکثر هفتگی',
+    ltsubjects:'دروس (کلیک)',lunavailable:'دوره‌های غیرقابل دسترس',lclassunavailable:'دوره‌های غیرقابل دسترس',available_label:'خالی / قابل استفاده',unavailable_label:'بسته / ناممکن',
+    bsave:'ذخیره',bcancel:'لغو',bdelete:'حذف',bedit:'ویرایش',
+    thname:'نام',thsubjects:'دروس',thsubjectname:'نام درس',thmaxdaily:'روزانه',thmaxweekly:'هفتگی',thactions:'عملیات',
+    notteachers:'هنوز معلمی نیست.',notsubjects:'هنوز درسی نیست.',
+    cclassreg:'ثبت کلاس‌ها',cclassregsub:'به هر تعداد که نیاز دارید کلاس اضافه کنید',
+    baddclass:'اضافه کلاس',lclassname:'نام کلاس',lclassgrade:'پایه',
+    thclassname:'نام کلاس',thgrade:'پایه',notclasses:'هنوز کلاسی نیست.',
+    csubjectassign:'تخصیص دروس',csubjectassignsub:'تخصیص دروس به کلاس‌ها',
+    baddassign:'اضافه تخصیص',lclass:'کلاس',lsubject:'درس',lteacher:'معلم',lweeklyperiods:'هفتگی',
+    thclass:'کلاس',thsubject:'درس',thteacher:'معلم',thperiodsweek:'هفتگی',thscheduled:'مقرر',
+    notassign:'هنوز تخصیصی نیست.',
+    cfulltimetable:'برنامه کامل',cfulltimetablesub:'برنامه تمام کلاس‌ها',
+    bgenerate:'تولید',bcheckconflicts:'بررسی تداخل',bclear:'پاک',bprint:'چاپ',bexportxlsx:'خروجی Excel',cbackup:'پشتیبان معلومات',cbackupsub:'معلومات را به فایل صادر و بعداً دوباره وارد کنید.',bbackup:'صدور پشتیبان',brestore:'وارد کردن پشتیبان',mmore:'بیشتر',
+    notimetable:'برنامه‌ای تولید نشده.',
+    cclasstimetable:'برنامه کلاس',noselectclass:'کلاس انتخاب کنید.',
+    cteachertimetable:'برنامه معلم',noselectteacher:'معلم انتخاب کنید.',
+    cconflictreport:'گزارش تداخل',cconflictreportsub:'مشکلات برنامه‌ریزی',
+    brecheck:'بررسی مجدد',noconflicts:'ابتدا برنامه تولید کنید.',
+    ftitle:'برنامه زمانی مکتب',fsubtitle:'تقسيم اوقات درسي ياران',
+    fdeveloper:'توسعه‌دهنده:',fcopy:'© <span id="currentYear">2026</span> عبدالسلام رحیمی.',
+    wtitle:'تنظیمات مکتب',wsubtitle:'مکتب را تنظیم کنید',
+    wstep1:'مرحله ۱: اطلاعات',wstep2:'مرحله ۲: زمان‌بندی',wstep2desc:'دوره‌ها. جمعه تعطیل.',
+    wstep3:'مرحله ۳: زبان',wstep3desc:'زبان انتخاب کنید.',
+    bprev:'قبلی',bnext:'بعدی',bfinish:'پایان',
+    toast_saved:'ذخیره شد!',toast_generated:'تولید شد!',toast_cleared:'پاک شد!',
+    toast_error:'فیلدها را پر کنید!',toast_conflict_check:'بررسی کامل!',toast_exported:'Excel دانلود شد!',
+    total_periods:'کل',teaching_periods:'تدریس',free_periods:'آزاد',
+    daily_periods:'روزانه',weekly_periods:'هفتگی',break_label:'☕ استراحت',
+    conflict_teacher:'تداخل معلم',conflict_class:'تداخل کلاس',
+    conflict_missing:'ناقص',conflict_excess:'اضافی',conflict_unavail:'دسترسی',conflict_unsched:'نامقرر',
+    type_label:'نوع:',generated_at:'تولید:'
+  },
+  ar:{
+    snavigation:'التنقل',stimetable:'الجدول الزمني',
+    mdashboard:'لوحة التحكم',msetup:'إعداد المدرسة',mperiods:'الفترات',msubjects:'المواد',
+    mteachers:'المعلمون',mclasses:'الفصول',massignments:'المهام',
+    mfulltt:'الجدول الكامل',mclasstt:'جدول الفصل',mteachertt:'جدول المعلم',mconflicts:'التعارضات',
+    st_teachers:'المعلمون',st_classes:'الفصول',st_periods:'الفترات',st_scheduled:'المجدولة',
+    pg_showing:'عرض',pg_of:'من',pg_prev:'السابق',pg_next:'التالي',pg_all:'الكل',pg_perpage:'لكل صفحة',
+    dwelcome:'مرحباً بكم في نظام الجدول الزمني',dashsubtitle:'جدولة تلقائية للمدارس الأفغانية',
+    ds_teachers:'إجمالي المعلمين',ds_classes:'إجمالي الفصول',ds_subjects:'إجمالي المواد',
+    ds_weekperiods:'فترات أسبوعية',ds_scheduled:'مجدولة',ds_unscheduled:'غير مجدولة',
+    ds_conflicts:'تعارضات',ds_completion:'الإنجاز',
+    cschoolinfo:'معلومات المدرسة',cschoolinfosub:'أدخل معلومات مدرستك',
+    lschoolname:'اسم المدرسة',lschooltype:'النوع',lstarttime:'وقت البداية',lperioddur:'مدة الفترة',
+    opt_primary:'ابتدائي',opt_middle:'متوسط',opt_high:'ثانوي',
+    cperiodconfig:'إعداد الفترات',cperiodconfigsub:'عدد الفترات. الجمعة عطلة.',
+    cbreakconfig:'إعداد الاستراحة',cbreakconfigsub:'الاستراحة بعد فترة',
+    lafterperiod:'بعد الفترة رقم',lbreakdur:'مدة الاستراحة',
+    csubjectmgmt:'إدارة المواد',csubjectmgmtsub:'إضافة وتعديل المواد',
+    baddsubject:'إضافة مادة',h4addsubject:'إضافة/تعديل مادة',lsubjname:'اسم المادة',lsubjunavailable:'الفترات غير المتاحة (انقر على الخلايا)',
+    cteacherreg:'تسجيل المعلمين',cteacherregsub:'أضف أي عدد تحتاجه من المعلمين',
+    baddteacher:'إضافة معلم',h4addteacher:'إضافة/تعديل معلم',lname:'الاسم',
+    lmaxdaily:'حد أقصى يومياً',lmaxweekly:'حد أقصى أسبوعياً',
+    ltsubjects:'المواد (انقر)',lunavailable:'الفترات غير المتاحة',
+    bsave:'حفظ',bcancel:'إلغاء',bdelete:'حذف',bedit:'تعديل',
+    thname:'الاسم',thsubjects:'المواد',thsubjectname:'اسم المادة',thmaxdaily:'يومياً',thmaxweekly:'أسبوعياً',thactions:'إجراءات',
+    notteachers:'لم يُضف معلم.',notsubjects:'لم تُضف مادة.',
+    cclassreg:'تسجيل الفصول',cclassregsub:'أضف أي عدد تحتاجه من الفصول',
+    baddclass:'إضافة فصل',lclassname:'اسم الفصل',lclassgrade:'الصف',
+    thclassname:'اسم الفصل',thgrade:'الصف',notclasses:'لم يُضف فصل.',
+    csubjectassign:'تخصيص المواد',csubjectassignsub:'تخصيص المواد للفصول',
+    baddassign:'إضافة تخصيص',lclass:'الفصل',lsubject:'المادة',lteacher:'المعلم',lweeklyperiods:'أسبوعياً',
+    thclass:'الفصل',thsubject:'المادة',thteacher:'المعلم',thperiodsweek:'أسبوعياً',thscheduled:'مجدولة',
+    notassign:'لم يُضف تخصيص.',
+    cfulltimetable:'الجدول الكامل',cfulltimetablesub:'الجدول لجميع الفصول',
+    bgenerate:'توليد',bcheckconflicts:'فحص',bclear:'مسح',bprint:'طباعة',bexportxlsx:'تصدير Excel',cbackup:'نسخ احتياطي للبيانات',cbackupsub:'صدّر بياناتك إلى ملف واستعدها لاحقاً.',bbackup:'تصدير النسخة الاحتياطية',brestore:'استيراد النسخة الاحتياطية',mmore:'المزيد',
+    notimetable:'لم يُولَّد جدول.',
+    cclasstimetable:'جدول الفصل',noselectclass:'اختر فصلاً.',
+    cteachertimetable:'جدول المعلم',noselectteacher:'اختر معلماً.',
+    cconflictreport:'تقرير التعارضات',cconflictreportsub:'مشاكل الجدولة',
+    brecheck:'إعادة فحص',noconflicts:'ولِّد الجدول أولاً.',
+    ftitle:'الجدول الزمني',fsubtitle:'د ښوونځي د تقسيم اوقات سیسټم',
+    fdeveloper:'المطور:',fcopy:'© ٢٠٢٥ عبدالسلام رحيمي.',
+    wtitle:'إعداد المدرسة',wsubtitle:'قم بإعداد مدرستك',
+    wstep1:'الخطوة ١',wstep2:'الخطوة ٢',wstep2desc:'الفترات. الجمعة عطلة.',
+    wstep3:'الخطوة ٣',wstep3desc:'اختر اللغة.',
+    bprev:'السابق',bnext:'التالي',bfinish:'إنهاء',
+    toast_saved:'تم الحفظ!',toast_generated:'تم التوليد!',toast_cleared:'تم المسح!',
+    toast_error:'أكمل الحقول!',toast_conflict_check:'اكتمل الفحص!',toast_exported:'تم تصدير Excel!',
+    total_periods:'الإجمالي',teaching_periods:'تدريس',free_periods:'حرّة',
+    daily_periods:'يومياً',weekly_periods:'أسبوعياً',break_label:'☕ استراحة',
+    conflict_teacher:'تعارض معلم',conflict_class:'تعارض فصل',
+    conflict_missing:'ناقصة',conflict_excess:'زائدة',conflict_unavail:'توفر',conflict_unsched:'غير مجدول',
+    type_label:'النوع:',generated_at:'تاريخ:'
+  }
+};
+
+function setLang(lang){
+  currentLang=lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.remove('active');
+    if((lang==='en'&&b.textContent==='EN')||(lang==='ps'&&b.textContent==='پښتو')||(lang==='fa'&&b.textContent==='دری')||(lang==='ar'&&b.textContent==='عربي'))b.classList.add('active');
+  });
+  document.documentElement.dir=['ps','fa','ar'].includes(lang)?'rtl':'ltr';
+  document.documentElement.lang=lang;
+  applyTranslations();updateAppName();
+  // Re-render dynamically generated content (table rows, pagination bars) so no
+  // part of the UI is left showing labels from the previous language.
+  renderPeriodConfig();renderSubjects();renderTeachers();renderClasses();renderAssignments();
+  refreshDashboard();
+  if(STATE.timetable&&STATE.timetable.entries.length){
+    const activeFullTT=document.getElementById('sec-fulltt')?.classList.contains('active');
+    if(activeFullTT)renderFullTimetable();
+    if(document.getElementById('classttSelect')?.value)showClassTimetable();
+    if(document.getElementById('teacherttSelect')?.value)showTeacherTimetable();
+    if(STATE.conflicts&&STATE.conflicts.length)renderConflicts();
+  }
+  saveToStorage();
+}
+function t(k){return(i18n[currentLang]&&i18n[currentLang][k])||i18n.en[k]||k}
+function applyTranslations(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n'),txt=t(k);
+    if(txt){if(el.tagName==='INPUT'&&el.type!=='button'&&el.type!=='submit')el.placeholder=txt;else if(k==='fcopy')el.innerHTML=txt;else el.textContent=txt}
+  });
+  updateCurrentYear();
+}
+
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  const sec=document.getElementById('sec-'+id); if(sec)sec.classList.add('active');
+  document.querySelectorAll('.menu-item').forEach(m=>m.classList.remove('active'));
+  document.querySelector(`.menu-item[data-section="${id}"]`)?.classList.add('active');
+  document.querySelectorAll('.mobile-nav-item').forEach(m=>m.classList.toggle('active',m.dataset.section===id));
+  if(window.innerWidth<=900)document.getElementById('sidebar').classList.remove('open');
+  if(id==='dashboard')refreshDashboard();
+  if(id==='teachers')renderTeachers();
+  if(id==='classes')renderClasses();
+  if(id==='subjects')renderSubjects();
+  if(id==='assignments')renderAssignments();
+  if(id==='fulltt')renderFullTimetable();
+  if(id==='classtt')refreshClassSelect();
+  if(id==='teachertt')refreshTeacherSelect();
+  if(id==='periods')renderPeriodConfig();
+  if(id==='conflicts')renderConflicts();
+}
+function toggleSidebar(){const sb=document.getElementById('sidebar');if(window.innerWidth<=900)sb.classList.toggle('open');else sb.classList.toggle('collapsed')}
+function showToast(msg,type='info'){const t=document.createElement('div');t.className='toast '+type;t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3500)}
+
+function saveToStorage(){
+  const payload=JSON.stringify({school:STATE.school,periodsPerDay:STATE.periodsPerDay,breakAfterPeriod:STATE.breakAfterPeriod,breakDuration:STATE.breakDuration,subjects:STATE.subjects,teachers:STATE.teachers,classes:STATE.classes,assignments:STATE.assignments,timetable:STATE.timetable,currentLang,initialized:STATE.initialized});
+  try{localStorage.setItem('schoolTT',payload)}catch(e){}
+  try{if(window.pywebview?.api) window.pywebview.api.save_data(payload)}catch(e){}
+}
+function applyStoredData(payload){
+  try{const d=typeof payload==='string'?JSON.parse(payload):payload;if(!d)return false;
+    Object.assign(STATE.school,d.school||{});Object.assign(STATE.periodsPerDay,d.periodsPerDay||{});
+    STATE.breakAfterPeriod=d.breakAfterPeriod||3;STATE.breakDuration=d.breakDuration||15;
+    if(Array.isArray(d.subjects)&&d.subjects.length>0){STATE.subjects=typeof d.subjects[0]==='string'?d.subjects.map((s,i)=>({id:'migrated_'+i,name:s,nameEn:s,unavail:{}})):d.subjects; STATE.subjects.forEach(s=>{if(!s.unavail)s.unavail={}});}
+    STATE.teachers=d.teachers||[];STATE.classes=d.classes||[];STATE.assignments=d.assignments||[];STATE.timetable=d.timetable||null;STATE.initialized=d.initialized||false;
+    if(d.currentLang)currentLang=d.currentLang;return true;
+  }catch(e){return false}
+}
+function loadFromStorage(){
+  try{const r=localStorage.getItem('schoolTT');return r?applyStoredData(r):false}catch(e){return false}
+}
+
+let _idC=0;function genId(){return'id_'+Date.now()+'_'+(++_idC)}
+
+// School Info
+function saveSchoolInfo(){
+  STATE.school.name=document.getElementById('schoolName').value.trim();
+  STATE.school.type=document.getElementById('schoolType').value;
+  STATE.school.startTime=document.getElementById('startTime').value;
+  STATE.school.periodDuration=parseInt(document.getElementById('periodDuration').value)||45;
+  if(STATE.school.name){document.getElementById('headerSchoolName').textContent=STATE.school.name;document.getElementById('headerSchoolName').style.display='inline'}
+  saveToStorage();showToast(t('toast_saved'),'success');
+}
+
+// Periods
+function renderPeriodConfig(){
+  const g=document.getElementById('periodConfigGrid');if(!g)return;
+  g.innerHTML=STATE.days.map((d,i)=>{
+    const dn=dayLabel(i);
+    return`<div class="period-config-card"><h4>${dn}</h4><div style="font-size:2rem;margin:4px 0">📅</div><input type="number" min="1" max="8" value="${STATE.periodsPerDay[d]||6}" onchange="STATE.periodsPerDay['${d}']=parseInt(this.value);saveToStorage()" style="width:70px;padding:8px;text-align:center;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:1.2rem;font-weight:700"><div style="font-size:.75rem;color:var(--text-light);margin-top:4px">${t('total_periods')}</div></div>`;
+  }).join('');
+}
+function savePeriodConfig(){
+  STATE.breakAfterPeriod=parseInt(document.getElementById('breakAfterPeriod').value)||3;
+  STATE.breakDuration=parseInt(document.getElementById('breakDuration').value)||15;
+  saveToStorage();showToast(t('toast_saved'),'success');
+}
+function dayLabel(i){
+  if(currentLang==='ps')return STATE.daysPs[i];
+  if(currentLang==='fa')return STATE.daysFa[i];
+  if(currentLang==='ar')return STATE.daysAr[i];
+  return STATE.days[i];
+}
+
+// ===== SUBJECTS =====
+function showSubjectForm(editId){
+  STATE.currentEditSubject=editId||null;
+  document.getElementById('subjectForm').classList.remove('hidden');
+  if(editId){const s=STATE.subjects.find(x=>x.id===editId);if(s)document.getElementById('sfName').value=s.name}
+  else document.getElementById('sfName').value='';
+  renderSubjectAvailGrid(editId);
+}
+function renderSubjectAvailGrid(editId){
+  const c=document.getElementById('sfAvailGrid'),subj=editId?STATE.subjects.find(x=>x.id===editId):null;
+  const maxP=Math.max(...STATE.days.map(d=>STATE.periodsPerDay[d]||6),6);
+  let h='<div style="overflow-x:auto"><table style="font-size:.78rem"><thead><tr><th></th>';
+  for(let p=1;p<=maxP;p++)h+=`<th>P${p}</th>`;
+  h+='</tr></thead><tbody>';
+  STATE.days.forEach((day,di)=>{
+    const dn=dayLabel(di),dp=STATE.periodsPerDay[day]||6;
+    h+=`<tr><td style="font-weight:600">${dn}</td>`;
+    for(let p=1;p<=maxP;p++){
+      if(p>dp)h+='<td style="background:#eee"></td>';
+      else{const u=subj&&subj.unavail&&subj.unavail[day]&&subj.unavail[day].includes(p);
+        h+=`<td class="subject-avail-cell" data-day="${day}" data-period="${p}" style="cursor:pointer;text-align:center;padding:6px;background:${u?'#FFCDD2':'#C8E6C9'}" onclick="toggleSubjectAvailCell(this)">${u?'❌':'✅'}</td>`}
+    }
+    h+='</tr>';
+  });
+  h+=`</tbody></table></div><div style="font-size:.75rem;color:var(--text-light);margin-top:6px">✅ = ${t('available_label')} | ❌ = ${t('unavailable_label')}</div>`;
+  c.innerHTML=h;
+}
+function toggleSubjectAvailCell(el){const u=el.textContent.trim()==='❌';el.textContent=u?'✅':'❌';el.style.background=u?'#C8E6C9':'#FFCDD2'}
+function cancelSubjectForm(){document.getElementById('subjectForm').classList.add('hidden');STATE.currentEditSubject=null}
+function saveSubject(){
+  const name=document.getElementById('sfName').value.trim();
+  if(!name){showToast(t('toast_error'),'error');return}
+  const un={};document.querySelectorAll('.subject-avail-cell').forEach(c=>{if(c.textContent.trim()==='❌'){const d=c.dataset.day,p=parseInt(c.dataset.period);if(!un[d])un[d]=[];un[d].push(p)}});
+  if(STATE.currentEditSubject){
+    const s=STATE.subjects.find(x=>x.id===STATE.currentEditSubject);
+    if(s){
+      const oldName=s.name;
+      s.name=name;s.unavail=un;
+      if(oldName!==name){
+        STATE.assignments.forEach(a=>{if(a.subject===oldName)a.subject=name});
+        STATE.teachers.forEach(tc=>{tc.subjects=tc.subjects.map(sn=>sn===oldName?name:sn)});
+      }
+    }
+  }else{
+    STATE.subjects.push({id:genId(),name,nameEn:name,unavail:un});
+  }
+  cancelSubjectForm();renderSubjects();saveToStorage();showToast(t('toast_saved'),'success');
+}
+function renderSubjects(){
+  const body=document.getElementById('subjectsBody'),no=document.getElementById('noSubjects'),pag=document.getElementById('subjectsPagination');
+  if(STATE.subjects.length===0){body.innerHTML='';no.classList.remove('hidden');if(pag)pag.innerHTML='';return}
+  no.classList.add('hidden');
+  const info=paginateList(STATE.subjects,'subjects');
+  body.innerHTML=info.items.map((s,idx)=>`<tr><td>${info.start+idx+1}</td><td><strong>${s.name}</strong></td><td class="actions-cell"><button class="btn btn-sm btn-primary" onclick="showSubjectForm('${s.id}')">✏️</button><button class="btn btn-sm btn-danger" onclick="deleteSubject('${s.id}')">🗑️</button></td></tr>`).join('');
+  if(pag)pag.innerHTML=renderPaginationBar('subjects',info);
+}
+function deleteSubject(id){
+  const subj=STATE.subjects.find(s=>s.id===id);
+  if(!subj)return;
+  const used=STATE.assignments.filter(a=>a.subject===subj.name);
+  const msg=used.length>0?
+    'Delete "'+subj.name+'"?\n\n'+used.length+' assignment(s) also use this subject and will be removed.':
+    'Delete "'+subj.name+'"?';
+  if(!confirm(msg))return;
+  STATE.subjects=STATE.subjects.filter(s=>s.id!==id);
+  STATE.assignments=STATE.assignments.filter(a=>a.subject!==subj.name);
+  STATE.teachers.forEach(tc=>{tc.subjects=tc.subjects.filter(s=>s!==subj.name)});
+  renderSubjects();renderTeachers();saveToStorage();
+  showToast(t('toast_saved'),'success');
+}
+
+// ===== TEACHERS =====
+function showTeacherForm(editId){
+  STATE.currentEditTeacher=editId||null;
+  document.getElementById('teacherForm').classList.remove('hidden');
+  if(editId){const tc=STATE.teachers.find(t=>t.id===editId);if(tc){document.getElementById('tfName').value=tc.name;document.getElementById('tfMaxDaily').value=tc.maxDaily;document.getElementById('tfMaxWeekly').value=tc.maxWeekly}}
+  else{document.getElementById('tfName').value='';document.getElementById('tfMaxDaily').value=6;document.getElementById('tfMaxWeekly').value=30}
+  renderSubjectTags(editId);renderAvailGrid(editId);
+}
+function cancelTeacherForm(){document.getElementById('teacherForm').classList.add('hidden');STATE.currentEditTeacher=null}
+function renderSubjectTags(editId){
+  const c=document.getElementById('tfSubjectTags'),tc=editId?STATE.teachers.find(t=>t.id===editId):null,sel=tc?new Set(tc.subjects):new Set();
+  c.innerHTML=STATE.subjects.map(s=>`<span class="tag ${sel.has(s.name)?'selected':''}" onclick="this.classList.toggle('selected')">${s.name}</span>`).join('');
+}
+function renderAvailGrid(editId){
+  const c=document.getElementById('tfAvailGrid'),tc=editId?STATE.teachers.find(t=>t.id===editId):null;
+  const maxP=Math.max(...STATE.days.map(d=>STATE.periodsPerDay[d]||6),6);
+  let h='<div style="overflow-x:auto"><table style="font-size:.78rem"><thead><tr><th></th>';
+  for(let p=1;p<=maxP;p++)h+=`<th>P${p}</th>`;
+  h+='</tr></thead><tbody>';
+  STATE.days.forEach((day,di)=>{
+    const dn=dayLabel(di),dp=STATE.periodsPerDay[day]||6;
+    h+=`<tr><td style="font-weight:600">${dn}</td>`;
+    for(let p=1;p<=maxP;p++){
+      if(p>dp)h+='<td style="background:#eee"></td>';
+      else{const u=tc&&tc.unavail&&tc.unavail[day]&&tc.unavail[day].includes(p);
+        h+=`<td class="avail-cell" data-day="${day}" data-period="${p}" style="cursor:pointer;text-align:center;padding:6px;background:${u?'#FFCDD2':'#C8E6C9'}" onclick="toggleAvailCell(this)">${u?'❌':'✅'}</td>`}
+    }
+    h+='</tr>';
+  });
+  h+='</tbody></table></div><div style="font-size:.75rem;color:var(--text-light);margin-top:6px">✅ = Available | ❌ = Unavailable</div>';
+  c.innerHTML=h;
+}
+function toggleAvailCell(el){const u=el.textContent.trim()==='❌';el.textContent=u?'✅':'❌';el.style.background=u?'#C8E6C9':'#FFCDD2'}
+function saveTeacher(){
+  const name=document.getElementById('tfName').value.trim();
+  if(!name){showToast(t('toast_error'),'error');return}
+  const subs=[];document.querySelectorAll('#tfSubjectTags .tag.selected').forEach(el=>subs.push(el.textContent));
+  const un={};document.querySelectorAll('.avail-cell').forEach(c=>{if(c.textContent.trim()==='❌'){const d=c.dataset.day,p=parseInt(c.dataset.period);if(!un[d])un[d]=[];un[d].push(p)}});
+  const md=parseInt(document.getElementById('tfMaxDaily').value)||6,mw=parseInt(document.getElementById('tfMaxWeekly').value)||30;
+  if(STATE.currentEditTeacher){const tc=STATE.teachers.find(t=>t.id===STATE.currentEditTeacher);if(tc){tc.name=name;tc.subjects=subs;tc.maxDaily=md;tc.maxWeekly=mw;tc.unavail=un}}
+  else STATE.teachers.push({id:genId(),name,subjects:subs,maxDaily:md,maxWeekly:mw,unavail:un});
+  cancelTeacherForm();renderTeachers();saveToStorage();showToast(t('toast_saved'),'success');
+}
+function renderTeachers(){
+  const body=document.getElementById('teachersBody'),no=document.getElementById('noTeachers'),pag=document.getElementById('teachersPagination');
+  if(!STATE.teachers.length){body.innerHTML='';no.classList.remove('hidden');if(pag)pag.innerHTML='';return}
+  no.classList.add('hidden');
+  const info=paginateList(STATE.teachers,'teachers');
+  body.innerHTML=info.items.map((tc,idx)=>`<tr><td>${info.start+idx+1}</td><td><strong>${tc.name}</strong></td><td>${tc.subjects.map(s=>`<span class="chip">${s}</span>`).join(' ')||'—'}</td><td>${tc.maxDaily}</td><td>${tc.maxWeekly}</td><td class="actions-cell"><button class="btn btn-sm btn-primary" onclick="showTeacherForm('${tc.id}')">✏️</button><button class="btn btn-sm btn-danger" onclick="deleteTeacher('${tc.id}')">🗑️</button></td></tr>`).join('');
+  if(pag)pag.innerHTML=renderPaginationBar('teachers',info);
+}
+function deleteTeacher(id){if(!confirm(t('bdelete')+'?'))return;STATE.teachers=STATE.teachers.filter(t=>t.id!==id);STATE.assignments=STATE.assignments.filter(a=>a.teacherId!==id);renderTeachers();saveToStorage();showToast(t('toast_saved'),'success')}
+
+// ===== CLASSES =====
+function showClassForm(editId){
+  STATE.currentEditClass=editId||null;document.getElementById('classForm').classList.remove('hidden');
+  if(editId){const cl=STATE.classes.find(c=>c.id===editId);if(cl){document.getElementById('cfName').value=cl.name;document.getElementById('cfGrade').value=cl.grade}}
+  else{document.getElementById('cfName').value='';document.getElementById('cfGrade').value=''}
+  renderClassAvailGrid(editId);
+}
+function renderClassAvailGrid(editId){
+  const c=document.getElementById('cfAvailGrid'),cl=editId?STATE.classes.find(x=>x.id===editId):null;
+  const maxP=Math.max(...STATE.days.map(d=>STATE.periodsPerDay[d]||6),6);
+  let h='<div style="overflow-x:auto"><table style="font-size:.78rem"><thead><tr><th></th>';
+  for(let p=1;p<=maxP;p++)h+=`<th>P${p}</th>`;
+  h+='</tr></thead><tbody>';
+  STATE.days.forEach((day,di)=>{
+    const dn=dayLabel(di),dp=STATE.periodsPerDay[day]||6;
+    h+=`<tr><td style="font-weight:600">${dn}</td>`;
+    for(let p=1;p<=maxP;p++){
+      if(p>dp)h+='<td style="background:#eee"></td>';
+      else{const u=cl&&cl.unavail&&cl.unavail[day]&&cl.unavail[day].includes(p);
+        h+=`<td class="class-avail-cell" data-day="${day}" data-period="${p}" style="cursor:pointer;text-align:center;padding:6px;background:${u?'#FFCDD2':'#C8E6C9'}" onclick="toggleClassAvailCell(this)">${u?'❌':'✅'}</td>`}
+    }
+    h+='</tr>';
+  });
+  h+=`</tbody></table></div><div style="font-size:.75rem;color:var(--text-light);margin-top:6px">✅ = ${t('available_label')} | ❌ = ${t('unavailable_label')}</div>`;
+  c.innerHTML=h;
+}
+function toggleClassAvailCell(el){const u=el.textContent.trim()==='❌';el.textContent=u?'✅':'❌';el.style.background=u?'#C8E6C9':'#FFCDD2'}
+function cancelClassForm(){document.getElementById('classForm').classList.add('hidden');STATE.currentEditClass=null}
+function saveClass(){
+  const name=document.getElementById('cfName').value.trim(),grade=document.getElementById('cfGrade').value.trim();
+  if(!name){showToast(t('toast_error'),'error');return}
+  const un={};document.querySelectorAll('.class-avail-cell').forEach(c=>{if(c.textContent.trim()==='❌'){const d=c.dataset.day,p=parseInt(c.dataset.period);if(!un[d])un[d]=[];un[d].push(p)}});
+  if(STATE.currentEditClass){const cl=STATE.classes.find(c=>c.id===STATE.currentEditClass);if(cl){cl.name=name;cl.grade=grade;cl.unavail=un}}
+  else STATE.classes.push({id:genId(),name,grade,unavail:un});
+  cancelClassForm();renderClasses();saveToStorage();showToast(t('toast_saved'),'success');
+}
+function renderClasses(){
+  const body=document.getElementById('classesBody'),no=document.getElementById('noClasses'),pag=document.getElementById('classesPagination');
+  if(!STATE.classes.length){body.innerHTML='';no.classList.remove('hidden');if(pag)pag.innerHTML='';return}
+  no.classList.add('hidden');
+  const info=paginateList(STATE.classes,'classes');
+  body.innerHTML=info.items.map((cl,idx)=>`<tr><td>${info.start+idx+1}</td><td><strong>${cl.name}</strong></td><td>${cl.grade||'—'}</td><td class="actions-cell"><button class="btn btn-sm btn-primary" onclick="showClassForm('${cl.id}')">✏️</button><button class="btn btn-sm btn-danger" onclick="deleteClass('${cl.id}')">🗑️</button></td></tr>`).join('');
+  if(pag)pag.innerHTML=renderPaginationBar('classes',info);
+}
+function deleteClass(id){if(!confirm(t('bdelete')+'?'))return;STATE.classes=STATE.classes.filter(c=>c.id!==id);STATE.assignments=STATE.assignments.filter(a=>a.classId!==id);renderClasses();saveToStorage();showToast(t('toast_saved'),'success')}
+
+// ===== ASSIGNMENTS =====
+function showAssignmentForm(editId){
+  STATE.currentEditAssign=editId||null;document.getElementById('assignForm').classList.remove('hidden');
+  const cs=document.getElementById('afClass'),ss=document.getElementById('afSubject'),ts=document.getElementById('afTeacher');
+  cs.innerHTML='<option value="">-- '+t('lclass')+' --</option>'+STATE.classes.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  ss.innerHTML='<option value="">-- '+t('lsubject')+' --</option>'+STATE.subjects.map(s=>`<option value="${s.name}">${s.name}</option>`).join('');
+  ts.innerHTML='<option value="">-- '+t('lteacher')+' --</option>'+STATE.teachers.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
+  if(editId){const a=STATE.assignments.find(x=>x.id===editId);if(a){cs.value=a.classId;ss.value=a.subject;ts.value=a.teacherId;document.getElementById('afPeriods').value=a.periods}}
+  else document.getElementById('afPeriods').value=4;
+}
+function cancelAssignForm(){document.getElementById('assignForm').classList.add('hidden');STATE.currentEditAssign=null}
+function saveAssignment(){
+  const classId=document.getElementById('afClass').value,subject=document.getElementById('afSubject').value,teacherId=document.getElementById('afTeacher').value,periods=parseInt(document.getElementById('afPeriods').value)||4;
+  if(!classId||!subject||!teacherId){showToast(t('toast_error'),'error');return}
+  if(STATE.currentEditAssign){const a=STATE.assignments.find(x=>x.id===STATE.currentEditAssign);if(a){a.classId=classId;a.subject=subject;a.teacherId=teacherId;a.periods=periods}}
+  else STATE.assignments.push({id:genId(),classId,subject,teacherId,periods});
+  cancelAssignForm();renderAssignments();saveToStorage();showToast(t('toast_saved'),'success');
+}
+function renderAssignments(){
+  const body=document.getElementById('assignBody'),no=document.getElementById('noAssignments'),pag=document.getElementById('assignmentsPagination');
+  if(!STATE.assignments.length){body.innerHTML='';no.classList.remove('hidden');if(pag)pag.innerHTML='';return}
+  no.classList.add('hidden');
+  const info=paginateList(STATE.assignments,'assignments');
+  body.innerHTML=info.items.map((a,idx)=>{
+    const cl=STATE.classes.find(c=>c.id===a.classId),tc=STATE.teachers.find(t=>t.id===a.teacherId),sc=getScheduledCount(a);
+    return`<tr><td>${info.start+idx+1}</td><td>${cl?cl.name:'??'}</td><td><span class="badge badge-blue">${a.subject}</span></td><td>${tc?tc.name:'??'}</td><td>${a.periods}</td><td><span class="badge ${sc>=a.periods?'badge-green':'badge-yellow'}">${sc}/${a.periods}</span></td><td class="actions-cell"><button class="btn btn-sm btn-primary" onclick="showAssignmentForm('${a.id}')">✏️</button><button class="btn btn-sm btn-danger" onclick="deleteAssignment('${a.id}')">🗑️</button></td></tr>`;
+  }).join('');
+  if(pag)pag.innerHTML=renderPaginationBar('assignments',info);
+}
+function getScheduledCount(a){if(!STATE.timetable)return 0;return STATE.timetable.entries.filter(e=>e.classId===a.classId&&e.subject===a.subject&&e.teacherId===a.teacherId).length}
+function deleteAssignment(id){if(!confirm(t('bdelete')+'?'))return;STATE.assignments=STATE.assignments.filter(a=>a.id!==id);renderAssignments();saveToStorage();showToast(t('toast_saved'),'success')}
+
+// ===== SCHEDULING ALGORITHM =====
+function generateTimetable(){
+  if(!STATE.assignments.length){showToast(t('toast_error'),'error');return}
+  const lessons=[];STATE.assignments.forEach(a=>{for(let i=0;i<a.periods;i++)lessons.push({assignmentId:a.id,classId:a.classId,subject:a.subject,teacherId:a.teacherId,assigned:false})});
+  const slots=[];STATE.days.forEach(day=>{const n=STATE.periodsPerDay[day]||6;for(let p=1;p<=n;p++)slots.push({day,period:p})});
+  const tS={},cS={},entries=[];
+  function canAssign(ls,sl){
+    const{day,period}=sl,tid=ls.teacherId,cid=ls.classId;
+    const tc=STATE.teachers.find(t=>t.id===tid);
+    if(tc&&tc.unavail&&tc.unavail[day]&&tc.unavail[day].includes(period))return false;
+    const cl=STATE.classes.find(c=>c.id===cid);
+    if(cl&&cl.unavail&&cl.unavail[day]&&cl.unavail[day].includes(period))return false;
+    const subj=STATE.subjects.find(s=>s.name===ls.subject);
+    if(subj&&subj.unavail&&subj.unavail[day]&&subj.unavail[day].includes(period))return false;
+    if(tS[tid]&&tS[tid][day]&&tS[tid][day].includes(period))return false;
+    if(cS[cid]&&cS[cid][day]&&cS[cid][day].includes(period))return false;
+    if(tc){const dc=tS[tid]&&tS[tid][day]?tS[tid][day].length:0;if(dc>=tc.maxDaily)return false;
+      let wc=0;if(tS[tid])STATE.days.forEach(d=>{wc+=(tS[tid][d]||[]).length});if(wc>=tc.maxWeekly)return false}
+    return true;
+  }
+  function assign(ls,sl){
+    ls.assigned=true;const{day,period}=sl;
+    if(!tS[ls.teacherId])tS[ls.teacherId]={};if(!tS[ls.teacherId][day])tS[ls.teacherId][day]=[];tS[ls.teacherId][day].push(period);
+    if(!cS[ls.classId])cS[ls.classId]={};if(!cS[ls.classId][day])cS[ls.classId][day]=[];cS[ls.classId][day].push(period);
+    entries.push({day,period,classId:ls.classId,subject:ls.subject,teacherId:ls.teacherId,assignmentId:ls.assignmentId});
+  }
+  function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+  function score(ls,sl){
+    let s=0;const{day,period}=sl,cid=ls.classId;
+    if(cS[cid]&&cS[cid][day])s-=cS[cid][day].length*3;
+    s+=Math.random()*2;return s;
+  }
+  function priority(ls){const tc=STATE.teachers.find(t=>t.id===ls.teacherId);let p=0;if(tc){p-=tc.maxDaily*10;const u=Object.values(tc.unavail||{}).reduce((s,a)=>s+a.length,0);p-=u}p-=lessons.filter(l=>l.teacherId===ls.teacherId).length;return p}
+
+  const maxAtt=5;let bestE=[],bestC=0;
+  for(let att=0;att<maxAtt;att++){
+    Object.keys(tS).forEach(k=>delete tS[k]);Object.keys(cS).forEach(k=>delete cS[k]);entries.length=0;lessons.forEach(l=>l.assigned=false);
+    const sorted=[...lessons].sort((a,b)=>priority(a)-priority(b));
+    if(att>0)shuffle(sorted);
+    for(const ls of sorted){
+      const avail=slots.filter(s=>canAssign(ls,s));
+      if(avail.length===0){for(const sl of shuffle([...slots])){if(canAssign(ls,assign(ls,sl)))break}}
+      else{avail.sort((a,b)=>score(ls,b)-score(ls,a));assign(ls,avail[0])}
+    }
+    const sc=lessons.filter(l=>l.assigned).length;
+    if(sc>bestC){bestC=sc;bestE=[...entries]}
+    if(sc===lessons.length)break;
+  }
+  entries.length=0;bestE.forEach(e=>entries.push(e));
+  const unscheduled=lessons.filter(l=>!l.assigned).map(l=>({classId:l.classId,subject:l.subject,teacherId:l.teacherId}));
+  STATE.timetable={entries:[...entries],unscheduled};STATE.conflicts=[];
+  saveToStorage();renderFullTimetable();refreshDashboard();
+  showToast(t('toast_generated')+' ('+bestC+'/'+lessons.length+')',bestC===lessons.length?'success':'warning');
+}
+function clearTimetable(){if(!confirm('Clear?'))return;STATE.timetable=null;STATE.conflicts=[];saveToStorage();renderFullTimetable();refreshDashboard();showToast(t('toast_cleared'),'info')}
+
+// ===== CONFLICTS =====
+function checkConflicts(){
+  STATE.conflicts=[];if(!STATE.timetable){showToast('Generate first!','error');return}
+  const e=STATE.timetable.entries;
+  for(let i=0;i<e.length;i++)for(let j=i+1;j<e.length;j++){
+    if(e[i].teacherId===e[j].teacherId&&e[i].day===e[j].day&&e[i].period===e[j].period)STATE.conflicts.push({type:'teacher',severity:'error',message:`${getTN(e[i].teacherId)}: ${e[i].day} P${e[i].period}`});
+    if(e[i].classId===e[j].classId&&e[i].day===e[j].day&&e[i].period===e[j].period)STATE.conflicts.push({type:'class',severity:'error',message:`${getCN(e[i].classId)}: ${e[i].day} P${e[i].period}`});
+  }
+  e.forEach(x=>{const tc=STATE.teachers.find(t=>t.id===x.teacherId);if(tc&&tc.unavail&&tc.unavail[x.day]&&tc.unavail[x.day].includes(x.period))STATE.conflicts.push({type:'unavail',severity:'error',message:`${tc.name}: ${x.day} P${x.period}`})});
+  e.forEach(x=>{const subj=STATE.subjects.find(s=>s.name===x.subject);if(subj&&subj.unavail&&subj.unavail[x.day]&&subj.unavail[x.day].includes(x.period))STATE.conflicts.push({type:'unavail',severity:'error',message:`${x.subject}: ${x.day} P${x.period}`})});
+  if(STATE.timetable.unscheduled)STATE.timetable.unscheduled.forEach(u=>STATE.conflicts.push({type:'unscheduled',severity:'warning',message:`${u.subject} → ${getCN(u.classId)}`}));
+  STATE.assignments.forEach(a=>{const sc=e.filter(x=>x.classId===a.classId&&x.subject===a.subject&&x.teacherId===a.teacherId).length;if(sc<a.periods)STATE.conflicts.push({type:'missing',severity:'warning',message:`${a.subject} ${getCN(a.classId)}: ${a.periods-sc} missing`})});
+  renderConflicts();refreshDashboard();showToast(t('toast_conflict_check'),STATE.conflicts.length===0?'success':'warning');
+}
+function getTN(id){const tc=STATE.teachers.find(t=>t.id===id);return tc?tc.name:'?'}
+function getCN(id){const cl=STATE.classes.find(c=>c.id===id);return cl?cl.name:'?'}
+function renderConflicts(){
+  const c=document.getElementById('conflictContent');
+  if(!STATE.conflicts.length){c.innerHTML='<div class="empty-msg"><div class="em-icon">✅</div><div>No conflicts!</div></div>';return}
+  c.innerHTML=STATE.conflicts.map(x=>`<div class="conflict-item ${x.severity==='warning'?'warn':''}"><div class="conflict-icon">${x.severity==='error'?'🔴':'🟡'}</div><div class="conflict-text"><div class="conflict-title">${t('conflict_'+x.type)}</div><div class="conflict-desc">${x.message}</div></div></div>`).join('');
+}
+
+// ===== TIMETABLE RENDERING =====
+function getSubjectColor(s){const c={'رياضي':'#E53935','فیزیک':'#7B1FA2','کيميا':'#00897B','ژوند پوهنه':'#43A047','انګلیسي':'#1E88E5','پښتو':'#8E24AA','دري':'#F4511E','عربي':'#00897B','اسلامي تعلیمات':'#6D4C41','تاريخ':'#5E35B1','جغرافیه':'#FFB300','کمپیوټر پوهنه':'#0277BD','هنر':'#EC407A','بدني روزنه':'#26A69A','Mathematics':'#E53935','Physics':'#7B1FA2','Chemistry':'#00897B','Biology':'#43A047','English':'#1E88E5','Pashto':'#8E24AA','Dari':'#F4511E','Arabic':'#00897B','Islamic Studies':'#6D4C41','History':'#5E35B1','Geography':'#FFB300','Computer Science':'#0277BD','Art':'#EC407A','Physical Education':'#26A69A'};if(c[s])return c[s];let h=0;for(let i=0;i<s.length;i++)h=s.charCodeAt(i)+((h<<5)-h);return`hsl(${Math.abs(h%360)},60%,45%)`}
+
+function buildTimetableGrid(entries,filterClassId,filterTeacherId){
+  const filtered=entries.filter(e=>(!filterClassId||e.classId===filterClassId)&&(!filterTeacherId||e.teacherId===filterTeacherId));
+  const maxP=Math.max(...STATE.days.map(d=>STATE.periodsPerDay[d]||6));
+  const dn=currentLang==='ps'?STATE.daysPs:currentLang==='fa'?STATE.daysFa:currentLang==='ar'?STATE.daysAr:STATE.days;
+  const ba=STATE.breakAfterPeriod,bd=STATE.breakDuration;
+  let h=`<div class="tt-grid" style="grid-template-columns:80px repeat(${STATE.days.length},1fr)">`;
+  h+='<div class="tt-header">دوري</div>';dn.forEach(d=>h+=`<div class="tt-header">${d}</div>`);
+  for(let p=1;p<=maxP;p++){
+    if(p===ba+1)h+=`<div class="tt-break" style="grid-column:1/-1">${t('break_label')} (${bd} min)</div>`;
+    h+=`<div class="tt-day">P${p}</div>`;
+    STATE.days.forEach(day=>{
+      const dp=STATE.periodsPerDay[day]||6;
+      if(p>dp)h+='<div class="tt-cell empty" style="background:#f5f5f5"></div>';
+      else{const en=filtered.find(e=>e.day===day&&e.period===p);
+        if(en){const tc=STATE.teachers.find(t=>t.id===en.teacherId);const cl=STATE.classes.find(c=>c.id===en.classId);
+          const sub=filterClassId?(tc?tc.name:''):filterTeacherId?(cl?cl.name:''):(tc?tc.name:'');
+          h+=`<div class="tt-cell" style="border-left:3px solid ${getSubjectColor(en.subject)}"><div class="subj" style="color:${getSubjectColor(en.subject)}">${en.subject}</div><div class="teacher">${sub}</div></div>`}
+        else h+='<div class="tt-cell empty">—</div>'}
+    });
+  }
+  h+='</div>';return h;
+}
+
+function renderFullTimetable(){
+  const c=document.getElementById('fullttContent');
+  if(!STATE.timetable||!STATE.timetable.entries.length){c.innerHTML=`<div class="empty-msg"><div class="em-icon">📅</div><div>${t('notimetable')}</div></div>`;return}
+  let h=printHeaderHTML();
+  h+=`<div style="text-align:center;margin-bottom:16px"><h2 style="color:var(--primary-dark)">${STATE.school.name||'Timetable'}</h2><p style="color:var(--text-light);font-size:.85rem">${t('type_label')} ${STATE.school.type} | ${t('generated_at')} ${new Date().toLocaleDateString()}</p></div>`;
+  STATE.classes.forEach(cl=>{
+    h+=`<div style="margin-bottom:24px"><h3 style="color:var(--primary);margin-bottom:8px">🎒 ${cl.name}</h3><div class="table-wrap">${buildTimetableGrid(STATE.timetable.entries,cl.id,null)}</div></div>`;
+  });
+  h+=printFooterHTML();
+  c.innerHTML=h;
+}
+
+function refreshClassSelect(){const s=document.getElementById('classttSelect');s.innerHTML='<option value="">-- '+t('lclass')+' --</option>'+STATE.classes.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}
+function showClassTimetable(){
+  const cid=document.getElementById('classttSelect').value,c=document.getElementById('classttContent');
+  if(!cid||!STATE.timetable){c.innerHTML=`<div class="empty-msg"><div class="em-icon">🎒</div><div>${t('noselectclass')}</div></div>`;return}
+  const cl=STATE.classes.find(x=>x.id===cid);
+  c.innerHTML=printHeaderHTML()+`<div style="text-align:center;margin-bottom:12px"><h3 style="color:var(--primary)">🎒 ${cl.name}</h3></div><div class="table-wrap">${buildTimetableGrid(STATE.timetable.entries,cid,null)}</div>`+printFooterHTML();
+}
+
+function refreshTeacherSelect(){const s=document.getElementById('teacherttSelect');s.innerHTML='<option value="">-- '+t('lteacher')+' --</option>'+STATE.teachers.map(x=>`<option value="${x.id}">${x.name}</option>`).join('')}
+function showTeacherTimetable(){
+  const tid=document.getElementById('teacherttSelect').value,c=document.getElementById('teacherttContent'),sd=document.getElementById('teacherStats'),sg=document.getElementById('teacherStatsGrid');
+  if(!tid||!STATE.timetable){c.innerHTML=`<div class="empty-msg"><div class="em-icon">📝</div><div>${t('noselectteacher')}</div></div>`;sd.classList.add('hidden');return}
+  const tc=STATE.teachers.find(x=>x.id===tid);
+  c.innerHTML=printHeaderHTML()+`<div style="text-align:center;margin-bottom:12px"><h3 style="color:var(--primary)">👨‍🏫 ${tc.name}</h3><p style="font-size:.85rem;color:var(--text-light)">${tc.subjects.join(', ')}</p></div><div class="table-wrap">${buildTimetableGrid(STATE.timetable.entries,null,tid)}</div>`+printFooterHTML();
+  const entries=STATE.timetable.entries.filter(e=>e.teacherId===tid),tot=entries.length;
+  const totalSlots=STATE.days.reduce((s,d)=>s+(STATE.periodsPerDay[d]||6),0);
+  sd.classList.remove('hidden');
+  sg.innerHTML=`<div class="stat-card"><div class="stat-icon">📚</div><div class="stat-val">${tot}</div><div class="stat-label">${t('teaching_periods')}</div></div><div class="stat-card"><div class="stat-icon">⏰</div><div class="stat-val">${totalSlots-tot}</div><div class="stat-label">${t('free_periods')}</div></div><div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val">${totalSlots}</div><div class="stat-label">${t('total_periods')}</div></div>`;
+}
+
+function updateSchoolBrand(){
+  const name=(STATE.school&&STATE.school.name||'').trim();
+  const header=document.getElementById('headerSchoolName');
+  const side=document.getElementById('sidebarSchoolName');
+  if(header){header.textContent=name;header.style.display=name?'block':'none';}
+  if(side){side.textContent=name || (currentLang==='ps'?'د ښوونځي سیستم':'School System');}
+}
+
+function refreshDashboard(){
+  updateSchoolBrand();
+  document.getElementById('dsTeachers').textContent=STATE.teachers.length;
+  document.getElementById('dsClasses').textContent=STATE.classes.length;
+  document.getElementById('dsSubjects').textContent=STATE.subjects.length;
+  const tw=STATE.days.reduce((s,d)=>s+(STATE.periodsPerDay[d]||6),0)*STATE.classes.length;
+  document.getElementById('dsWeekPeriods').textContent=tw;
+  const sc=STATE.timetable?STATE.timetable.entries.length:0;
+  document.getElementById('dsScheduled').textContent=sc;
+  document.getElementById('dsUnscheduled').textContent=Math.max(0,tw-sc);
+  document.getElementById('dsConflicts').textContent=STATE.conflicts.length;
+  document.getElementById('dsPercent').textContent=(tw>0?Math.round(sc/tw*100):0)+'%';
+  document.getElementById('ssTeachers').textContent=STATE.teachers.length;
+  document.getElementById('ssClasses').textContent=STATE.classes.length;
+  document.getElementById('ssPeriods').textContent=tw;
+  document.getElementById('ssScheduled').textContent=sc;
+}
+
+// ===== XLSX EXPORT (with native fallback) =====
+// ===== Excel export (works standalone in any browser — no external library,
+// no server, no desktop shell needed) using the SpreadsheetML 2003 XML format,
+// which Excel/LibreOffice/Google Sheets open natively. =====
+function xlEscape(s){
+  return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function xlCell(val){
+  if(val===''||val==null)return'<Cell/>';
+  const num=typeof val==='number'&&isFinite(val);
+  const text=xlEscape(val).replace(/\r?\n/g,'&#10;');
+  const style=String(val).includes('\n')?' ss:StyleID="wrap"':'';
+  return `<Cell${style}><Data ss:Type="${num?'Number':'String'}">${text}</Data></Cell>`;
+}
+function xlRow(row){return `<Row>${row.map(xlCell).join('')}</Row>`}
+function xlSheet(sheet){
+  const name=xlEscape((sheet.name||'Sheet').replace(/[\\\/\?\*\[\]:]/g,' ').slice(0,31))||'Sheet';
+  return `<Worksheet ss:Name="${name}"><Table>${(sheet.rows||[]).map(xlRow).join('')}</Table></Worksheet>`;
+}
+function buildSpreadsheetML(sheetData){
+  return `<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">
+<Styles><Style ss:ID="Default" ss:Name="Normal"><Alignment ss:Vertical="Center"/><Font ss:FontName="Calibri" ss:Size="11"/></Style><Style ss:ID="wrap"><Alignment ss:WrapText="1" ss:Vertical="Center"/></Style></Styles>
+${sheetData.map(xlSheet).join('')}
+</Workbook>`;
+}
+async function exportToXLSX(filename, sheetData){
+  try{
+    if(window.pywebview?.api){
+      const result=await window.pywebview.api.save_xlsx(filename,sheetData);
+      if(result?.ok){showToast(t('toast_exported')+'\n'+result.path,'success');return;}
+      throw new Error(result?.error||'Could not save Excel file');
+    }
+    // Browser mode: generate a real, Excel-openable file entirely client-side.
+    const xml=buildSpreadsheetML(sheetData);
+    const blob=new Blob(['\ufeff'+xml],{type:'application/vnd.ms-excel'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download=filename.replace(/\.xlsx$/i,'.xls');
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+    showToast(t('toast_exported'),'success');
+  }catch(e){showToast('Export error: '+e.message,'error')}
+}
+
+function exportFullTimetableXLSX(){
+  if(!STATE.timetable||!STATE.timetable.entries.length){showToast('Generate first!','error');return}
+  const rows=[];
+  const classes=STATE.classes;
+  const maxP=Math.max(...STATE.days.map(d=>STATE.periodsPerDay[d]||6));
+  // One worksheet only: classes are columns; each period is represented by two rows
+  // so Subject and Teacher are never forced into the same Excel row.
+  rows.push([appName(), ...classes.slice(1).map(()=> '')]);
+  rows.push([`${STATE.school.name||'School'} — ${t('cfulltimetable')}`, ...classes.slice(1).map(()=> '')]);
+  rows.push(['دوره / Period', ...classes.map(c=>c.name)]);
+  STATE.days.forEach((day,di)=>{
+    const dayName=dayLabel(di);
+    for(let p=1;p<=maxP;p++){
+      const dp=STATE.periodsPerDay[day]||6;
+      if(p>dp) continue;
+      if(p===STATE.breakAfterPeriod+1) rows.push(['☕ '+t('break_label')+' ('+STATE.breakDuration+' min)', ...classes.map(()=> '')]);
+      const subjectRow=[`${dayName} — P${p} — ${t('subject_label')}`];
+      const teacherRow=[`${dayName} — P${p} — ${t('teacher_label')}`];
+      classes.forEach(cl=>{
+        const en=STATE.timetable.entries.find(e=>e.classId===cl.id&&e.day===day&&e.period===p);
+        subjectRow.push(en?en.subject:'—');
+        teacherRow.push(en?getTN(en.teacherId):'—');
+      });
+      rows.push(subjectRow,teacherRow);
+    }
+  });
+  rows.push([]); rows.push([t('generated_at'),new Date().toLocaleString()]);
+  exportToXLSX('School_Full_Timetable_'+(STATE.school.name||'School')+'.xlsx',[{name:'عمومي تقسيم اوقات',kind:'school_full',rows}]);
+}
+function exportClassTimetableXLSX(){
+  const cid=document.getElementById('classttSelect').value;
+  if(!cid||!STATE.timetable){showToast('Select class!','error');return}
+  const cl=STATE.classes.find(x=>x.id===cid),entries=STATE.timetable.entries.filter(e=>e.classId===cid);
+  const maxP=Math.max(...STATE.days.map(d=>STATE.periodsPerDay[d]||6));
+  const rows=[];
+  rows.push([appName(),'','','','','','']);
+  rows.push([STATE.school.name||'School','','','','','','']);
+  rows.push([cl.name,'','','','','','']);
+  rows.push(['']);
+  const hdr=['دوري'];STATE.days.forEach((d,i)=>hdr.push(dayLabel(i)));rows.push(hdr);
+  for(let p=1;p<=maxP;p++){
+    if(p===STATE.breakAfterPeriod+1)rows.push(['☕ BREAK','','','','','','']);
+    const row=['P'+p];STATE.days.forEach(day=>{const dp=STATE.periodsPerDay[day]||6;if(p>dp)row.push('');else{const en=entries.find(e=>e.day===day&&e.period===p);row.push(en?en.subject+'\n'+getTN(en.teacherId):'—')}});
+    rows.push(row);
+  }
+  exportToXLSX('Class_'+cl.name+'.xlsx',[{name:cl.name,rows}]);
+}
+
+function exportTeacherTimetableXLSX(){
+  const tid=document.getElementById('teacherttSelect').value;
+  if(!tid||!STATE.timetable){showToast('Select teacher!','error');return}
+  const tc=STATE.teachers.find(x=>x.id===tid),entries=STATE.timetable.entries.filter(e=>e.teacherId===tid);
+  const maxP=Math.max(...STATE.days.map(d=>STATE.periodsPerDay[d]||6));
+  const rows=[];
+  rows.push([appName(),'','','','','','']);
+  rows.push([STATE.school.name||'School','','','','','','']);
+  rows.push(['👨‍🏫 '+tc.name,'','','','','','']);
+  rows.push([tc.subjects.join(', ')]);
+  rows.push(['']);
+  const hdr=['دوري'];STATE.days.forEach((d,i)=>hdr.push(dayLabel(i)));rows.push(hdr);
+  for(let p=1;p<=maxP;p++){
+    if(p===STATE.breakAfterPeriod+1)rows.push(['☕ BREAK','','','','','','']);
+    const row=['P'+p];STATE.days.forEach(day=>{const dp=STATE.periodsPerDay[day]||6;if(p>dp)row.push('');else{const en=entries.find(e=>e.day===day&&e.period===p);row.push(en?en.subject+'\n'+getCN(en.classId):'—')}});
+    rows.push(row);
+  }
+  rows.push(['']);
+  rows.push([t('teaching_periods'),entries.length]);
+  exportToXLSX('Teacher_'+tc.name+'.xlsx',[{name:tc.name,rows}]);
+}
+
+// ===== PRINT =====
+function printSection(id){
+  const el=document.getElementById(id); if(!el) return;
+  // Do not open a second browser window: print directly from the embedded Desktop WebView.
+  const sections=document.querySelectorAll('.section');
+  sections.forEach(s=>s.classList.remove('active'));
+  const parent=el.closest('.section'); if(parent) parent.classList.add('active');
+  setTimeout(()=>window.print(),100);
+}
+// ===== WIZARD =====
+function initWizard(){if(STATE.initialized){document.getElementById('wizardOverlay').classList.add('hidden');return}renderWizPeriodGrid();updateWizDots()}
+function renderWizPeriodGrid(){const g=document.getElementById('wizPeriodGrid');if(!g)return;g.innerHTML=STATE.days.map((d,i)=>`<div class="period-config-card"><h4>${dayLabel(i)}</h4><input type="number" min="1" max="8" value="${STATE.periodsPerDay[d]||6}" id="wizPeriod_${d}" style="width:60px;padding:6px;text-align:center;border:1.5px solid var(--border);border-radius:var(--radius-sm)"></div>`).join('')}
+function updateWizDots(){document.getElementById('wizDots').innerHTML=[1,2,3].map(s=>`<div class="step-dot ${s===STATE.wizStep?'active':s<STATE.wizStep?'done':''}"></div>`).join('');document.querySelectorAll('.wizard-step').forEach(s=>s.classList.toggle('active',parseInt(s.dataset.step)===STATE.wizStep));document.getElementById('wizPrev').disabled=STATE.wizStep===1;const nb=document.getElementById('wizNext');if(STATE.wizStep===3){nb.innerHTML='✅ '+t('bfinish');nb.className='btn btn-success'}else{nb.innerHTML=t('bnext')+' →';nb.className='btn btn-primary'}}
+function wizNav(d){
+  if(d===1&&STATE.wizStep===3){finishWizard();return}
+  if(d===1&&STATE.wizStep===1){STATE.school.name=document.getElementById('wizSchoolName').value.trim();STATE.school.type=document.getElementById('wizSchoolType').value;STATE.school.startTime=document.getElementById('wizStartTime').value;STATE.school.periodDuration=parseInt(document.getElementById('wizPeriodDur').value)||45}
+  if(d===1&&STATE.wizStep===2){STATE.days.forEach(day=>{const el=document.getElementById('wizPeriod_'+day);if(el)STATE.periodsPerDay[day]=parseInt(el.value)||6});STATE.breakAfterPeriod=parseInt(document.getElementById('wizBreakAfter').value)||3;STATE.breakDuration=parseInt(document.getElementById('wizBreakDur').value)||15}
+  STATE.wizStep=Math.max(1,Math.min(3,STATE.wizStep+d));updateWizDots();
+}
+function finishWizard(){
+  STATE.school.name=document.getElementById('wizSchoolName').value.trim()||STATE.school.name;
+  STATE.school.type=document.getElementById('wizSchoolType').value;STATE.school.startTime=document.getElementById('wizStartTime').value;STATE.school.periodDuration=parseInt(document.getElementById('wizPeriodDur').value)||45;
+  STATE.days.forEach(day=>{const el=document.getElementById('wizPeriod_'+day);if(el)STATE.periodsPerDay[day]=parseInt(el.value)||6});
+  STATE.breakAfterPeriod=parseInt(document.getElementById('wizBreakAfter').value)||3;STATE.breakDuration=parseInt(document.getElementById('wizBreakDur').value)||15;
+  STATE.initialized=true;document.getElementById('wizardOverlay').classList.add('hidden');
+  document.getElementById('schoolName').value=STATE.school.name;document.getElementById('schoolType').value=STATE.school.type;document.getElementById('startTime').value=STATE.school.startTime;document.getElementById('periodDuration').value=STATE.school.periodDuration;document.getElementById('breakAfterPeriod').value=STATE.breakAfterPeriod;document.getElementById('breakDuration').value=STATE.breakDuration;
+  if(STATE.school.name){document.getElementById('headerSchoolName').textContent=STATE.school.name;document.getElementById('headerSchoolName').style.display='inline'}
+  renderPeriodConfig();saveToStorage();refreshDashboard();showToast(t('toast_saved'),'success');
+}
+
+function exportDataBackup(){
+  try{
+    const payload=JSON.stringify({version:2,app:'Yaraan Timetable',exportedAt:new Date().toISOString(),data:{school:STATE.school,periodsPerDay:STATE.periodsPerDay,breakAfterPeriod:STATE.breakAfterPeriod,breakDuration:STATE.breakDuration,subjects:STATE.subjects,teachers:STATE.teachers,classes:STATE.classes,assignments:STATE.assignments,timetable:STATE.timetable,currentLang,initialized:STATE.initialized}},null,2);
+    const blob=new Blob([payload],{type:'application/json;charset=utf-8'});
+    const url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download='Yaraan_Timetable_Backup_'+new Date().toISOString().slice(0,10)+'.json';
+    document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+    showToast(currentLang==='ps'?'بیک اپ فایل جوړ شو.':currentLang==='fa'?'فایل پشتیبان ساخته شد.':currentLang==='ar'?'تم إنشاء ملف النسخة الاحتياطية.':'Backup file created.','success');
+  }catch(e){showToast('Backup error: '+e.message,'error')}
+}
+function importDataBackup(event){
+  const file=event.target.files?.[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const raw=JSON.parse(reader.result); const data=raw.data||raw;
+      if(!data||typeof data!=='object')throw new Error('Invalid backup file');
+      applyStoredData(data); STATE.initialized=data.initialized!==false;
+      saveToStorage();
+      document.getElementById('schoolName').value=STATE.school.name||'';
+      document.getElementById('schoolType').value=STATE.school.type||'primary';
+      document.getElementById('startTime').value=STATE.school.startTime||'07:30';
+      document.getElementById('periodDuration').value=STATE.school.periodDuration||45;
+      document.getElementById('breakAfterPeriod').value=STATE.breakAfterPeriod||3;
+      document.getElementById('breakDuration').value=STATE.breakDuration||15;
+      if(STATE.school.name){document.getElementById('headerSchoolName').textContent=STATE.school.name;document.getElementById('headerSchoolName').style.display='inline'}
+      setLang(currentLang);renderPeriodConfig();renderTeachers();renderClasses();renderSubjects();renderAssignments();refreshDashboard();
+      showToast(currentLang==='ps'?'بیک اپ په بریالیتوب وارد شو.':currentLang==='fa'?'پشتیبان با موفقیت وارد شد.':currentLang==='ar'?'تم استيراد النسخة الاحتياطية بنجاح.':'Backup restored successfully.','success');
+    }catch(e){showToast('Import error: '+e.message,'error')}
+    event.target.value='';
+  };
+  reader.readAsText(file);
+}
+
+function updateCurrentYear(){document.querySelectorAll('#currentYear').forEach(el=>el.textContent=new Date().getFullYear())}
+
+// ===== INIT =====
+async function init(){
+  updateCurrentYear();
+  let h=loadFromStorage();
+  if(window.pywebview?.api){try{const saved=await window.pywebview.api.load_data();if(saved){h=applyStoredData(saved)||h;}}catch(e){}}
+  if(h){document.getElementById('schoolName').value=STATE.school.name||'';document.getElementById('schoolType').value=STATE.school.type||'primary';document.getElementById('startTime').value=STATE.school.startTime||'07:30';document.getElementById('periodDuration').value=STATE.school.periodDuration||45;document.getElementById('breakAfterPeriod').value=STATE.breakAfterPeriod||3;document.getElementById('breakDuration').value=STATE.breakDuration||15;if(STATE.school.name){document.getElementById('headerSchoolName').textContent=STATE.school.name;document.getElementById('headerSchoolName').style.display='inline'}setLang(currentLang)}else setLang('ps');
+  renderPeriodConfig();renderTeachers();renderClasses();renderSubjects();renderAssignments();refreshDashboard();initWizard();applyTranslations();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  if(window.pywebview){init();}
+  else{
+    // Plain browser / HTML mode: don't wait forever for the desktop pywebview bridge.
+    // If pywebview's own ready event fires shortly, use it; otherwise start immediately
+    // so refreshed/reopened browser sessions always reload saved data.
+    let started=false;
+    const start=()=>{if(started)return;started=true;init();};
+    window.addEventListener('pywebviewready',start,{once:true});
+    setTimeout(start,300);
+  }
+});
+
+// ===== PWA: register the service worker so the app works fully offline
+// once it has been opened at least once. Runs only in real browser mode
+// (skipped inside the pywebview desktop shell, which doesn't need it). =====
+if('serviceWorker' in navigator && !window.pywebview){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
