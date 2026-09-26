@@ -2,23 +2,8 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🏫 ياران درسي مهالوېش</title>
-
-<!-- ===== PWA: installable app metadata ===== -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0D47A1">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="application-name" content="ياران درسي مهالوېش">
-<!-- iOS home-screen support -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ياران درسي مهالوېش">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<!-- Favicons -->
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 
 <style>
 :root{--primary:#1565C0;--primary-light:#42A5F5;--primary-lighter:#BBDEFB;--primary-lightest:#E3F2FD;--primary-dark:#0D47A1;--secondary:#0277BD;--accent:#00ACC1;--bg:#ECEFF1;--card:#FFFFFF;--text:#212121;--text-light:#546E7A;--border:#CFD8DC;--success:#2E7D32;--warning:#F57F17;--danger:#C62828;--info:#0288D1;--sidebar-w:260px;--header-h:60px;--shadow:0 2px 8px rgba(0,0,0,.12);--shadow-lg:0 8px 32px rgba(0,0,0,.15);--radius:10px;--radius-sm:6px;--trans:.3s ease}
@@ -173,27 +158,19 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
 .pagination-bar .pg-info{font-size:.8rem;color:var(--text-light)}
 .pagination-bar .pg-nav{display:flex;align-items:center;gap:8px}
 .pagination-bar .pg-current{font-size:.82rem;font-weight:600;color:var(--primary-dark);min-width:56px;text-align:center}
-@media print{.pagination-bar{display:none!important}}
+.search-results{display:flex;flex-direction:column;gap:10px}.search-result-item{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;cursor:pointer;transition:var(--trans)}.search-result-item:hover{border-color:var(--primary-light);background:var(--primary-lightest)}.search-result-type{font-size:.72rem;color:var(--primary);font-weight:700}.search-result-title{font-weight:700;color:var(--text)}.search-result-meta{font-size:.78rem;color:var(--text-light);margin-top:3px}.search-empty{text-align:center;padding:28px;color:var(--text-light)}
+@media print{@page{size:A4 landscape;margin:8mm}body.printing .section.active .card-header,body.printing .section.active #teacherStats{display:none!important}body.printing .section.active .card{border:0!important;padding:0!important;margin:0!important;box-shadow:none!important}body.printing .section.active #fullttPrint,body.printing .section.active #classttPrint,body.printing .section.active #teacherttPrint{display:block!important;width:100%!important}body.printing .section.active .tt-grid{width:100%!important;max-width:100%!important;overflow:visible!important}body.printing .section.active .tt-cell{min-height:42px!important;padding:4px!important;font-size:9px!important}body.printing .section.active .tt-header,body.printing .section.active .tt-day{padding:5px!important;font-size:9px!important}body.printing .section.active .tt-cell .subj{font-size:9px!important}body.printing .section.active .tt-cell .teacher{font-size:8px!important}}@media print{.pagination-bar{display:none!important}}
 @media(max-width:900px){.pagination-bar{justify-content:center;text-align:center}}
 .mt-sm{margin-top:8px}.mt-md{margin-top:16px}.mb-sm{margin-bottom:8px}
 .text-sm{font-size:.82rem}.text-muted{color:var(--text-light)}
 .period-config-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
 .period-config-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center}
 .period-config-card h4{color:var(--primary);font-size:.9rem;margin-bottom:8px}
-@page{size:A4;margin:10mm}
-@media print{.header,.sidebar,.hamburger,.footer,.btn,.form-actions,.wizard-overlay,.toast{display:none!important}.section:not(.active){display:none!important}.main-area{margin:0!important;padding:5px!important}.card{box-shadow:none!important;border:1px solid #000!important;break-inside:avoid}.tt-grid{border:2px solid #000}.tt-header,.tt-day{background:#333!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.tt-cell{border:1px solid #999!important}body{background:#fff!important}.print-only-title{display:block!important}.print-only-footer{display:block!important}
-/* Class & Teacher timetable: force a single-grid layout that always fits one A4 page (school days/periods are bounded, so no scaling is needed — just tighter, non-scrolling spacing). */
-#classttPrint,#teacherttPrint{width:100%;page-break-inside:avoid;break-inside:avoid}
-#classttPrint .table-wrap,#teacherttPrint .table-wrap{overflow:visible!important;width:100%!important}
-#classttPrint .tt-grid,#teacherttPrint .tt-grid{page-break-inside:avoid;break-inside:avoid;width:100%!important}
-#classttPrint .tt-cell,#teacherttPrint .tt-cell{min-height:32px;padding:3px 2px;font-size:.7rem}
-#classttPrint .tt-header,#teacherttPrint .tt-header,#classttPrint .tt-day,#teacherttPrint .tt-day{padding:4px 2px;font-size:.7rem}
-#classttPrint .tt-cell .subj,#teacherttPrint .tt-cell .subj{font-size:.7rem}
-#classttPrint .tt-cell .teacher,#teacherttPrint .tt-cell .teacher{font-size:.6rem}
-}
+@media print{.header,.sidebar,.hamburger,.footer,.btn,.form-actions,.wizard-overlay,.toast{display:none!important}.section:not(.active){display:none!important}.main-area{margin:0!important;padding:0!important}.card{box-shadow:none!important;border:0!important;break-inside:avoid}.tt-grid{border:2px solid #000}.tt-header,.tt-day{background:#333!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.tt-cell{border:1px solid #999!important}body{background:#fff!important}.print-only-title{display:block!important}.print-only-footer{display:block!important}}
 @media(max-width:900px){.sidebar{transform:translateX(-100%);width:260px}.sidebar.open{transform:translateX(0)}html[dir="rtl"] .sidebar{transform:translateX(100%)}html[dir="rtl"] .sidebar.open{transform:translateX(0)}.main-area{margin-left:0!important;margin-right:0!important}.hamburger{display:block}.form-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.footer-content{flex-direction:column;text-align:center}.footer-left{border-right:none;border-bottom:1px solid rgba(255,255,255,.2);padding-right:0;padding-bottom:12px}}
 /* ===== MOBILE APP UX ===== */
 .mobile-bottom-nav{display:none}
+.mobile-backup-card{margin-top:0}
 @media(max-width:900px){
   :root{--header-h:56px;--mobile-nav-h:68px}
   html,body{width:100%;min-width:0;overflow-x:hidden}
@@ -246,7 +223,7 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
   .footer{padding:16px 12px;margin-top:auto;margin-bottom:8px}
   .footer-content{gap:9px}
   .footer-copy{font-size:.7rem;line-height:1.5}
-  #sec-backup .form-actions .btn{flex:1;min-width:145px}
+  .mobile-backup-card .form-actions .btn{flex:1;min-width:145px}
   .mobile-bottom-nav{position:fixed;display:flex;align-items:stretch;justify-content:space-around;gap:2px;left:0;right:0;bottom:0;height:var(--mobile-nav-h);padding:6px 4px calc(6px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);box-shadow:0 -4px 18px rgba(0,0,0,.10);z-index:1400}
   .mobile-nav-item{flex:1;min-width:0;border:0;background:transparent;color:var(--text-light);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:3px 1px;border-radius:9px;font-size:.62rem;font-weight:600;line-height:1.05;cursor:pointer}
   .mobile-nav-item .mni-icon{font-size:1.3rem;line-height:1}
@@ -298,6 +275,7 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
   </div>
   <div class="sidebar-section-title" data-i18n="snavigation">NAVIGATION</div>
   <div class="menu-item active" onclick="showSection('dashboard')" data-section="dashboard"><span class="mi-icon">📊</span><span class="mi-text" data-i18n="mdashboard">Dashboard</span><span class="mi-arrow">›</span></div>
+  <div class="menu-item" onclick="showSection('search')" data-section="search"><span class="mi-icon">🔎</span><span class="mi-text" data-i18n="msearch">Search</span><span class="mi-arrow">›</span></div>
   <div class="menu-item" onclick="showSection('setup')" data-section="setup"><span class="mi-icon">⚙️</span><span class="mi-text" data-i18n="msetup">School Setup</span><span class="mi-arrow">›</span></div>
   <div class="menu-item" onclick="showSection('periods')" data-section="periods"><span class="mi-icon">🕐</span><span class="mi-text" data-i18n="mperiods">Periods & Timing</span><span class="mi-arrow">›</span></div>
   <div class="menu-item" onclick="showSection('subjects')" data-section="subjects"><span class="mi-icon">📖</span><span class="mi-text" data-i18n="msubjects">Subjects</span><span class="mi-arrow">›</span></div>
@@ -309,11 +287,12 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
   <div class="menu-item" onclick="showSection('classtt')" data-section="classtt"><span class="mi-icon">🎒</span><span class="mi-text" data-i18n="mclasstt">Class Timetable</span><span class="mi-arrow">›</span></div>
   <div class="menu-item" onclick="showSection('teachertt')" data-section="teachertt"><span class="mi-icon">📝</span><span class="mi-text" data-i18n="mteachertt">Teacher Timetable</span><span class="mi-arrow">›</span></div>
   <div class="menu-item" onclick="showSection('conflicts')" data-section="conflicts"><span class="mi-icon">⚠️</span><span class="mi-text" data-i18n="mconflicts">Conflicts</span><span class="mi-arrow">›</span></div>
-  <div class="menu-item" onclick="showSection('backup')" data-section="backup"><span class="mi-icon">💾</span><span class="mi-text" data-i18n="cbackup">Data Backup</span><span class="mi-arrow">›</span></div>
+  <div class="sidebar-section-title" data-i18n="sdata">DATA</div>
+  <div class="menu-item" onclick="showSection('backup')" data-section="backup"><span class="mi-icon">💾</span><span class="mi-text" data-i18n="mbackup">Backup</span><span class="mi-arrow">›</span></div>
   <div class="stats-mini" id="sidebarStats">
     <div class="stat-row"><span data-i18n="st_teachers">ښوونکي</span><span class="stat-val" id="ssTeachers">0</span></div>
     <div class="stat-row"><span data-i18n="st_classes">ټولګي</span><span class="stat-val" id="ssClasses">0</span></div>
-    <div class="stat-row"><span data-i18n="st_periods">دوري</span><span class="stat-val" id="ssPeriods">0</span></div>
+    <div class="stat-row"><span data-i18n="st_periods">دورې</span><span class="stat-val" id="ssPeriods">0</span></div>
     <div class="stat-row"><span data-i18n="st_scheduled">مقرر</span><span class="stat-val" id="ssScheduled">0</span></div>
   </div>
 </nav>
@@ -347,14 +326,14 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
     <div class="stat-card"><div class="stat-icon">👨‍🏫</div><div class="stat-val" id="dsTeachers">0</div><div class="stat-label" data-i18n="ds_teachers">ټول ښوونکي</div></div>
     <div class="stat-card"><div class="stat-icon">📚</div><div class="stat-val" id="dsClasses">0</div><div class="stat-label" data-i18n="ds_classes">ټول ټولګي</div></div>
     <div class="stat-card"><div class="stat-icon">📖</div><div class="stat-val" id="dsSubjects">0</div><div class="stat-label" data-i18n="ds_subjects">ټول مضامین</div></div>
-    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-val" id="dsWeekPeriods">0</div><div class="stat-label" data-i18n="ds_weekperiods">اونیزه دوري</div></div>
+    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-val" id="dsWeekPeriods">0</div><div class="stat-label" data-i18n="ds_weekperiods">اونیزه دورې</div></div>
     <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-val" id="dsScheduled">0</div><div class="stat-label" data-i18n="ds_scheduled">مقرر شوي</div></div>
     <div class="stat-card"><div class="stat-icon">❌</div><div class="stat-val" id="dsUnscheduled">0</div><div class="stat-label" data-i18n="ds_unscheduled">نامقرر</div></div>
     <div class="stat-card"><div class="stat-icon">⚠️</div><div class="stat-val" id="dsConflicts">0</div><div class="stat-label" data-i18n="ds_conflicts">ټکرونه</div></div>
     <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val" id="dsPercent">0%</div><div class="stat-label" data-i18n="ds_completion">بشپړتیا</div></div>
   </div>
   <div class="card" style="text-align:center">
-    <button class="btn btn-danger btn-sm" onclick="if(confirm('Reset ALL data? / ټول معلومات پاک کړئ؟')){localStorage.removeItem('schoolTT');location.reload()}">🔄 <span data-i18n="bresetall">ټول معلومات پاک کړئ</span></button>
+    <button class="btn btn-danger btn-sm" onclick="if(confirm('Reset ALL data? / ټول معلومات پاک کړئ؟')){localStorage.removeItem('schoolTT');location.reload()}">🔄 <span data-i18n="معلومات پاک کړئ!">ټول معلومات پاک کړئ</span></button>
   </div>
 </div>
 
@@ -364,7 +343,7 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
     <div class="card-header"><div><div class="card-title">⚙️ <span data-i18n="cschoolinfo">د ښوونځي معلومات</span></div><div class="card-subtitle" data-i18n="cschoolinfosub">خپل د ښوونځي معلومات ولیکئ</div></div></div>
     <div class="form-grid">
       <div class="form-group"><label data-i18n="lschoolname">🏫 د ښوونځي نوم</label><input type="text" id="schoolName"></div>
-      <div class="form-group"><label data-i18n="lschooltype">📋 د ښوونځي ډول</label><select id="schoolType"><option value="primary" data-i18n="opt_primary">ابتدايي</option><option value="middle" data-i18n="opt_middle">متوسطه</option><option value="high" data-i18n="opt_high">لیسه</option></select></div>
+      <div class="form-group"><label data-i18n="lschooltype">📋 د ښوونځي ډول</label><select id="schoolType"><option value="primary" data-i18n="opt_primary">ابتدايه</option><option value="middle" data-i18n="opt_middle">متوسطه</option><option value="high" data-i18n="opt_high">لیسه</option></select></div>
       <div class="form-group"><label data-i18n="lstarttime">🕐 د پیل وخت</label><input type="time" id="startTime" value="07:30"></div>
       <div class="form-group"><label data-i18n="lperioddur">⏱️ د دورې موده (دقیقې)</label><input type="number" id="periodDuration" value="45" min="30" max="120"></div>
     </div>
@@ -372,29 +351,33 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
   </div>
 </div>
 
+<!-- SEARCH -->
+<div class="section" id="sec-search">
+  <div class="card">
+    <div class="card-header"><div><div class="card-title">🔎 <span data-i18n="csearch">لټون</span></div><div class="card-subtitle" data-i18n="csearchsub">ښوونکي، ټولګي، مضامین او درسي ساعتونه په چټکۍ ومومئ.</div></div></div>
+    <div class="form-group"><label data-i18n="lsearch">د لټون کلمه</label><input type="search" id="globalSearchInput" data-i18n-placeholder="search_placeholder" placeholder="نوم، مضمون، ټولګی یا ښوونکی..." oninput="performGlobalSearch()" autocomplete="off"></div>
+    <div id="globalSearchResults" class="search-results" style="margin-top:16px"></div>
+  </div>
+</div>
 <!-- BACKUP -->
 <div class="section" id="sec-backup">
   <div class="card">
     <div class="card-header"><div><div class="card-title">💾 <span data-i18n="cbackup">د معلوماتو بیک اپ</span></div><div class="card-subtitle" data-i18n="cbackupsub">معلومات فایل ته صادر کړئ او بېرته یې وارد کړئ.</div></div></div>
-    <div class="form-actions" style="margin:0">
-      <button class="btn btn-export" onclick="exportDataBackup()">⬇️ <span data-i18n="bbackup">بیک اپ صادرول</span></button>
-      <button class="btn btn-outline" onclick="document.getElementById('backupFileInput').click()">⬆️ <span data-i18n="brestore">بیک اپ واردول</span></button>
-      <input id="backupFileInput" type="file" accept="application/json,.json" hidden onchange="importDataBackup(event)">
-    </div>
+    <div class="form-actions" style="margin:0"><button class="btn btn-export" onclick="exportDataBackup()">⬇️ <span data-i18n="bbackup">بیک اپ صادرول</span></button><button class="btn btn-outline" onclick="document.getElementById('backupFileInput').click()">⬆️ <span data-i18n="brestore">بیک اپ واردول</span></button><input id="backupFileInput" type="file" accept="application/json,.json" hidden onchange="importDataBackup(event)"></div>
   </div>
 </div>
 
 <!-- PERIODS -->
 <div class="section" id="sec-periods">
   <div class="card">
-    <div class="card-header"><div><div class="card-title">🕐 <span data-i18n="cperiodconfig">د دورو امستنه</span></div><div class="card-subtitle" data-i18n="cperiodconfigsub">د هرې ورځې دوري ولیکئ. جمعه بند دي.</div></div></div>
+    <div class="card-header"><div><div class="card-title">🕐 <span data-i18n="cperiodconfig">د دورو سمون</span></div><div class="card-subtitle" data-i18n="cperiodconfigsub">د هرې ورځې دورې ولیکئ. جمعه بند دي.</div></div></div>
     <div class="period-config-grid" id="periodConfigGrid"></div>
   </div>
   <div class="card">
-    <div class="card-header"><div><div class="card-title">☕ <span data-i18n="cbreakconfig">د استراحت امستنه</span></div><div class="card-subtitle" data-i18n="cbreakconfigsub">استراحت د کومې دورې نه وروسته او څو دقیقې</div></div></div>
+    <div class="card-header"><div><div class="card-title">☕ <span data-i18n="cbreakconfig">د تفريح سمون</span></div><div class="card-subtitle" data-i18n="cbreakconfigsub">تفريح د کومې دورې نه وروسته او څو دقیقې</div></div></div>
     <div class="form-grid">
-      <div class="form-group"><label data-i18n="lafterperiod">استراحت له کومې دورې وروسته</label><input type="number" id="breakAfterPeriod" value="3" min="1" max="8"></div>
-      <div class="form-group"><label data-i18n="lbreakdur">استراحت موده (دقیقې)</label><input type="number" id="breakDuration" value="15" min="5" max="60"></div>
+      <div class="form-group"><label data-i18n="lafterperiod">تفريح له کومې دورې وروسته</label><input type="number" id="breakAfterPeriod" value="3" min="1" max="8"></div>
+      <div class="form-group"><label data-i18n="lbreakdur">تفريح موده (دقیقې)</label><input type="number" id="breakDuration" value="15" min="5" max="60"></div>
     </div>
     <div class="form-actions mt-md"><button class="btn btn-primary" onclick="savePeriodConfig()">💾 <span data-i18n="bsave">خوندي کول</span></button></div>
   </div>
@@ -425,7 +408,7 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
       <table><thead><tr><th>#</th><th data-i18n="thsubjectname">د مطلب نوم</th><th data-i18n="thactions">کړنې</th></tr></thead><tbody id="subjectsBody"></tbody></table>
     </div>
     <div id="subjectsPagination"></div>
-    <div id="noSubjects" class="empty-msg"><div class="em-icon">📖</div><div data-i18n="notsubjects">تر اوس هیڅ مطلب نه دی اضافه شوی.</div></div>
+    <div id="noSubjects" class="empty-msg"><div class="em-icon">📖</div><div data-i18n="notsubjects">تر اوسه هیڅ مطلب نه دی اضافه شوی.</div></div>
   </div>
 </div>
 
@@ -440,15 +423,15 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
       <h4 style="margin-bottom:12px;color:var(--primary)" data-i18n="h4addteacher">ښوونکی اضافه/سمون</h4>
       <div class="form-grid">
         <div class="form-group"><label data-i18n="lname">نوم</label><input type="text" id="tfName"></div>
-        <div class="form-group"><label data-i18n="lmaxdaily">ترټوله ورځنۍ دوري</label><input type="number" id="tfMaxDaily" value="6" min="1" max="8"></div>
-        <div class="form-group"><label data-i18n="lmaxweekly">ترټوله اونیزه دوري</label><input type="number" id="tfMaxWeekly" value="30" min="1" max="42"></div>
+        <div class="form-group"><label data-i18n="lmaxdaily">تر ټولو ډيرې ورځنۍ دورې</label><input type="number" id="tfMaxDaily" value="6" min="1" max="8"></div>
+        <div class="form-group"><label data-i18n="lmaxweekly">تر ټولو ډيرې اونیزه دورې</label><input type="number" id="tfMaxWeekly" value="30" min="1" max="42"></div>
       </div>
       <div class="form-group mt-sm">
         <label data-i18n="ltsubjects">مضامین (کلیک وکړئ)</label>
         <div id="tfSubjectTags" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px"></div>
       </div>
       <div class="form-group mt-sm">
-        <label data-i18n="lunavailable">ناممکنې دوري (کلیک وکړئ)</label>
+        <label data-i18n="lunavailable">ناممکنې دورې (کلیک وکړئ)</label>
         <div id="tfAvailGrid" style="margin-top:6px"></div>
       </div>
       <div class="form-actions">
@@ -460,7 +443,7 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
       <table><thead><tr><th>#</th><th data-i18n="thname">نوم</th><th data-i18n="thsubjects">مضامین</th><th data-i18n="thmaxdaily">ورځنۍ</th><th data-i18n="thmaxweekly">اونیزه</th><th data-i18n="thactions">کړنې</th></tr></thead><tbody id="teachersBody"></tbody></table>
     </div>
     <div id="teachersPagination"></div>
-    <div id="noTeachers" class="empty-msg"><div class="em-icon">👨‍🏫</div><div data-i18n="notteachers">تر اوس هیڅ ښوونکی نه دی اضافه شوی.</div></div>
+    <div id="noTeachers" class="empty-msg"><div class="em-icon">👨‍🏫</div><div data-i18n="notteachers">تر اوسه هیڅ ښوونکی نه دی اضافه شوی.</div></div>
   </div>
 </div>
 
@@ -489,7 +472,7 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
       <table><thead><tr><th>#</th><th data-i18n="thclassname">د ټولګي نوم</th><th data-i18n="thgrade">کچه</th><th data-i18n="thactions">کړنې</th></tr></thead><tbody id="classesBody"></tbody></table>
     </div>
     <div id="classesPagination"></div>
-    <div id="noClasses" class="empty-msg"><div class="em-icon">📚</div><div data-i18n="notclasses">تر اوس هیڅ ټولګی نه دی اضافه شوی.</div></div>
+    <div id="noClasses" class="empty-msg"><div class="em-icon">📚</div><div data-i18n="notclasses">تر اوسه هیڅ ټولګی نه دی اضافه شوی.</div></div>
   </div>
 </div>
 
@@ -505,7 +488,7 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
         <div class="form-group"><label data-i18n="lclass">ټولګی</label><select id="afClass"></select></div>
         <div class="form-group"><label data-i18n="lsubject">مطلب</label><select id="afSubject"></select></div>
         <div class="form-group"><label data-i18n="lteacher">ښوونکی</label><select id="afTeacher"></select></div>
-        <div class="form-group"><label data-i18n="lweeklyperiods">اونیزه دوري</label><input type="number" id="afPeriods" value="4" min="1" max="12"></div>
+        <div class="form-group"><label data-i18n="lweeklyperiods">اونیزه دورې</label><input type="number" id="afPeriods" value="4" min="1" max="12"></div>
       </div>
       <div class="form-actions">
         <button class="btn btn-success" onclick="saveAssignment()">✅ <span data-i18n="bsave">خوندي کول</span></button>
@@ -516,7 +499,7 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
       <table><thead><tr><th>#</th><th data-i18n="thclass">ټولګی</th><th data-i18n="thsubject">مطلب</th><th data-i18n="thteacher">ښوونکی</th><th data-i18n="thperiodsweek">اونیزه</th><th data-i18n="thscheduled">مقرر</th><th data-i18n="thactions">کړنې</th></tr></thead><tbody id="assignBody"></tbody></table>
     </div>
     <div id="assignmentsPagination"></div>
-    <div id="noAssignments" class="empty-msg"><div class="em-icon">📋</div><div data-i18n="notassign">تر اوس هیڅ درسي ساعت نشته.</div></div>
+    <div id="noAssignments" class="empty-msg"><div class="em-icon">📋</div><div data-i18n="notassign">تر اوسه هیڅ درسي ساعت نشته.</div></div>
   </div>
 </div>
 
@@ -533,7 +516,7 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
         <button class="btn btn-info" onclick="printSection('fullttPrint')">🖨️ <span data-i18n="bprint">پرینټ</span></button>
       </div>
     </div>
-    <div id="fullttPrint"><div id="fullttContent" style="overflow-x:auto"><div class="empty-msg"><div class="em-icon">📅</div><div data-i18n="notimetable">تر اوس تقسيم اوقات نه دی جوړ شوی.</div></div></div></div>
+    <div id="fullttPrint"><div id="fullttContent" style="overflow-x:auto"><div class="empty-msg"><div class="em-icon">📅</div><div data-i18n="notimetable">تر اوسه تقسيم اوقات نه دی جوړ شوی.</div></div></div></div>
   </div>
 </div>
 
@@ -600,7 +583,7 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
 <div class="wizard-overlay" id="wizardOverlay">
   <div class="wizard-box">
     <div class="wizard-header">
-      <h2>🏫 <span data-i18n="wtitle">د ښوونځي امستنه</span></h2>
+      <h2>🏫 <span data-i18n="wtitle">د ښوونځي سمون</span></h2>
       <p data-i18n="wsubtitle">خپل ښوونځی په اسانه ګامونو امستئ</p>
       <div class="step-dots" id="wizDots"></div>
     </div>
@@ -609,18 +592,18 @@ tbody tr:nth-child(even):hover{background:var(--primary-lighter)}
         <h3 style="margin-bottom:14px;color:var(--primary)">📋 <span data-i18n="wstep1">لومړی ګام: د ښوونځي معلومات</span></h3>
         <div class="form-grid">
           <div class="form-group"><label data-i18n="lschoolname">🏫 د ښوونځي نوم</label><input type="text" id="wizSchoolName"></div>
-          <div class="form-group"><label data-i18n="lschooltype">📋 د ښوونځي ډول</label><select id="wizSchoolType"><option value="primary">ابتدايي</option><option value="middle">متوسطه</option><option value="high">لیسه</option></select></div>
+          <div class="form-group"><label data-i18n="lschooltype">📋 د ښوونځي ډول</label><select id="wizSchoolType"><option value="primary">ابتدايه</option><option value="middle">متوسطه</option><option value="high">لیسه</option></select></div>
           <div class="form-group"><label data-i18n="lstarttime">🕐 د پیل وخت</label><input type="time" id="wizStartTime" value="07:30"></div>
           <div class="form-group"><label data-i18n="lperioddur">⏱️ د دورې موده (دقیقې)</label><input type="number" id="wizPeriodDur" value="45" min="30" max="120"></div>
         </div>
       </div>
       <div class="wizard-step" data-step="2">
-        <h3 style="margin-bottom:14px;color:var(--primary)">🕐 <span data-i18n="wstep2">دویم ګام: دوري او وخت</span></h3>
-        <p class="text-sm text-muted mb-sm" data-i18n="wstep2desc">د هرې ورځې دوري ولیکئ. جمعه بند دي.</p>
+        <h3 style="margin-bottom:14px;color:var(--primary)">🕐 <span data-i18n="wstep2">دویم ګام: دورې او وخت</span></h3>
+        <p class="text-sm text-muted mb-sm" data-i18n="wstep2desc">د هرې ورځې دورې ولیکئ. جمعه بند دي.</p>
         <div class="period-config-grid" id="wizPeriodGrid"></div>
         <div class="form-grid mt-md">
-          <div class="form-group"><label data-i18n="lafterperiod">☕ استراحت له کومې دورې وروسته</label><input type="number" id="wizBreakAfter" value="3" min="1" max="8"></div>
-          <div class="form-group"><label data-i18n="lbreakdur">⏱️ استراحت موده (دقیقې)</label><input type="number" id="wizBreakDur" value="15" min="5" max="60"></div>
+          <div class="form-group"><label data-i18n="lafterperiod">☕ تفريح له کومې دورې وروسته</label><input type="number" id="wizBreakAfter" value="3" min="1" max="8"></div>
+          <div class="form-group"><label data-i18n="lbreakdur">⏱️ تفريح موده (دقیقې)</label><input type="number" id="wizBreakDur" value="15" min="5" max="60"></div>
         </div>
       </div>
       <div class="wizard-step" data-step="3">
@@ -752,13 +735,27 @@ function renderByPageKey(key){
   else if(key==='assignments')renderAssignments();
 }
 
+// ===== GLOBAL SEARCH =====
+function performGlobalSearch(){
+  const input=document.getElementById('globalSearchInput'),box=document.getElementById('globalSearchResults');if(!input||!box)return;
+  const q=input.value.trim().toLocaleLowerCase();
+  if(!q){box.innerHTML=`<div class="search-empty">🔎 ${t('search_hint')}</div>`;return}
+  const results=[];
+  STATE.teachers.forEach(tc=>{if([tc.name,...(tc.subjects||[])].join(' ').toLocaleLowerCase().includes(q))results.push({type:t('search_teacher'),title:tc.name,meta:(tc.subjects||[]).join('، '),section:'teachers'})});
+  STATE.classes.forEach(cl=>{if([cl.name,cl.grade].join(' ').toLocaleLowerCase().includes(q))results.push({type:t('search_class'),title:cl.name,meta:cl.grade||'',section:'classes'})});
+  STATE.subjects.forEach(s=>{if(String(s.name).toLocaleLowerCase().includes(q))results.push({type:t('search_subject'),title:s.name,meta:'',section:'subjects'})});
+  STATE.assignments.forEach(a=>{const teacher=getTN(a.teacherId),cls=getCN(a.classId);if([a.subject,teacher,cls].join(' ').toLocaleLowerCase().includes(q))results.push({type:t('search_assignment'),title:a.subject,meta:`${cls} — ${teacher}`,section:'assignments'})});
+  (STATE.timetable?.entries||[]).forEach(e=>{const teacher=getTN(e.teacherId),cls=getCN(e.classId);if([e.subject,teacher,cls,e.day].join(' ').toLocaleLowerCase().includes(q))results.push({type:t('search_timetable'),title:e.subject,meta:`${cls} — ${teacher} — ${e.day} P${e.period}`,section:'fulltt'})});
+  if(!results.length){box.innerHTML=`<div class="search-empty">🔍 ${t('search_noresults')}</div>`;return}
+  box.innerHTML=results.slice(0,100).map(r=>`<div class="search-result-item" onclick="showSection('${r.section}')"><div class="search-result-type">${r.type}</div><div class="search-result-title">${escapeExcelHtml(r.title)}</div>${r.meta?`<div class="search-result-meta">${escapeExcelHtml(r.meta)}</div>`:''}</div>`).join('');
+}
 // ===== i18n =====
 const i18n = {
   en:{
     snavigation:'NAVIGATION',stimetable:'TIMETABLE',
     mdashboard:'Dashboard',msetup:'School Setup',mperiods:'Periods & Timing',msubjects:'Subjects',
     mteachers:'Teachers',mclasses:'Classes',massignments:'Assignments',
-    mfulltt:'Full Timetable',mclasstt:'Class Timetable',mteachertt:'Teacher Timetable',mconflicts:'Conflicts',
+    mfulltt:'Full Timetable',mclasstt:'Class Timetable',mteachertt:'Teacher Timetable',msearch:'Search',mbackup:'Backup',sdata:'DATA',csearch:'Search',csearchsub:'Find teachers, classes, subjects and assignments quickly.',lsearch:'Search term',search_placeholder:'Name, subject, class or teacher...',search_hint:'Type something to search.',search_noresults:'No results found.',search_teacher:'Teacher',search_class:'Class',search_subject:'Subject',search_assignment:'Assignment',search_timetable:'Timetable',mconflicts:'Conflicts',
     st_teachers:'Teachers',st_classes:'Classes',st_periods:'Periods',st_scheduled:'Scheduled',
     pg_showing:'Showing',pg_of:'of',pg_prev:'Previous',pg_next:'Next',pg_all:'All',pg_perpage:'Per page',
     dwelcome:'Welcome to School Timetable Generator',dashsubtitle:'Complete automated scheduling for Afghan schools',
@@ -811,76 +808,76 @@ const i18n = {
   },
   ps:{
     snavigation:'لارښوونه',stimetable:'تقسيم اوقات',
-    mdashboard:'ډشبورډ',msetup:'ښوونځي امستنې',mperiods:'دوري او وخت',msubjects:'مضامین',
+    mdashboard:'ډشبورډ',msetup:'ښوونځي سمون',mperiods:'دورې او وخت',msubjects:'مضامین',
     mteachers:'ښوونکي',mclasses:'ټولګي',massignments:'درسي ساعتونه',
-    mfulltt:'ټول تقسيم اوقات',mclasstt:'د ټولګي تقسيم اوقات',mteachertt:'د ښوونکي تقسيم اوقات',mconflicts:'ټکرونه',
-    st_teachers:'ښوونکي',st_classes:'ټولګي',st_periods:'دوري',st_scheduled:'مقرر',
+    mfulltt:'ټول تقسيم اوقات',mclasstt:'د ټولګي تقسيم اوقات',mteachertt:'د ښوونکي تقسيم اوقات',msearch:'لټون',mbackup:'بیک اپ',sdata:'معلومات',csearch:'لټون',csearchsub:'ښوونکي، ټولګي، مضامین او درسي ساعتونه په چټکۍ ومومئ.',lsearch:'د لټون کلمه',search_placeholder:'نوم، مضمون، ټولګی یا ښوونکی...',search_hint:'د لټون لپاره څه ولیکئ.',search_noresults:'هیڅ پایله ونه موندل شوه.',search_teacher:'ښوونکی',search_class:'ټولګی',search_subject:'مضمون',search_assignment:'درسي ساعت',search_timetable:'تقسيم اوقات',mconflicts:'ټکرونه',
+    st_teachers:'ښوونکي',st_classes:'ټولګي',st_periods:'دورې',st_scheduled:'مقرر',
     pg_showing:'ښودل کیږي',pg_of:'د',pg_prev:'مخکنی',pg_next:'بل',pg_all:'ټول',pg_perpage:'په هره پاڼه کې',
     dwelcome:'د ښوونځي د تقسيم اوقات سیسټم ته ښه راغلاست',dashsubtitle:'د افغانستان د ښوونځیو لپاره تقسيم اوقات',
     ds_teachers:'ټول ښوونکي',ds_classes:'ټول ټولګي',ds_subjects:'ټول مضامین',
-    ds_weekperiods:'اونیزه دوري',ds_scheduled:'مقرر شوي',ds_unscheduled:'نامقرر',
+    ds_weekperiods:'اونیزه دورې',ds_scheduled:'مقرر شوي',ds_unscheduled:'نامقرر',
     ds_conflicts:'ټکرونه',ds_completion:'بشپړتیا',
     cschoolinfo:'د ښوونځي معلومات',cschoolinfosub:'خپل د ښوونځي معلومات ولیکئ',
     lschoolname:'د ښوونځي نوم',lschooltype:'د ښوونځي ډول',lstarttime:'د پیل وخت',lperioddur:'د دورې موده (دقیقې)',
-    opt_primary:'ابتدايي',opt_middle:'متوسطه',opt_high:'لیسه',
-    cperiodconfig:'د دورو امستنه',cperiodconfigsub:'د هرې ورځې دوري ولیکئ. جمعه بند دي.',
-    cbreakconfig:'د استراحت امستنه',cbreakconfigsub:'استراحت د کومې دورې نه وروسته او څو دقیقې',
-    lafterperiod:'استراحت له کومې دورې وروسته',lbreakdur:'استراحت موده (دقیقې)',
+    opt_primary:'ابتدايه',opt_middle:'متوسطه',opt_high:'لیسه',
+    cperiodconfig:'د دورو سمون',cperiodconfigsub:'د هرې ورځې دورې ولیکئ. جمعه بند دي.',
+    cbreakconfig:'د تفريح سمون',cbreakconfigsub:'تفريح د کومې دورې نه وروسته او څو دقیقې',
+    lafterperiod:'تفريح له کومې دورې وروسته',lbreakdur:'تفريح موده (دقیقې)',
     csubjectmgmt:'د مضامینو اداره',csubjectmgmtsub:'مضامین اضافه، سمون او ړنګول',
-    baddsubject:'مطلب اضافه',h4addsubject:'مطلب اضافه/سمون',lsubjname:'د مطلب نوم',lsubjunavailable:'ناممکنې دوري (کلیک وکړئ)',
+    baddsubject:'مطلب اضافه',h4addsubject:'مطلب اضافه/سمون',lsubjname:'د مطلب نوم',lsubjunavailable:'ناممکنې دورې (کلیک وکړئ)',
     cteacherreg:'د ښوونکو ثبت',cteacherregsub:'هر څومره ښوونکي چې اړتیا وي اضافه کړئ',
     baddteacher:'ښوونکی اضافه',h4addteacher:'ښوونکی اضافه/سمون',lname:'نوم',
-    lmaxdaily:'ترټوله ورځنۍ دوري',lmaxweekly:'ترټوله اونیزه دوري',
+    lmaxdaily:'تر ټولو ډيرې ورځنۍ دورې',lmaxweekly:'تر ټولو ډيرې اونیزه دورې',
     ltsubjects:'مضامین (کلیک وکړئ)',lunavailable:'ناممکنې دورې (کلیک وکړئ)',lclassunavailable:'ناممکنې دورې (کلیک وکړئ)',available_label:'خالي / شته',unavailable_label:'بنده / ناممکنه',
     bsave:'خوندي کول',bcancel:'لغوه کول',bdelete:'ړنګول',bedit:'سمون',
     thname:'نوم',thsubjects:'مضامین',thsubjectname:'د مطلب نوم',thmaxdaily:'ورځنۍ',thmaxweekly:'اونیزه',thactions:'کړنې',
-    notteachers:'تر اوس هیڅ ښوونکی نه دی اضافه شوی.',notsubjects:'تر اوس هیڅ مطلب نه دی اضافه شوی.',
+    notteachers:'تر اوسه هیڅ ښوونکی نه دی اضافه شوی.',notsubjects:'تر اوسه هیڅ مطلب نه دی اضافه شوی.',
     cclassreg:'د ټولګي ثبت',cclassregsub:'هر څومره ټولګي چې اړتیا وي اضافه کړئ',
     baddclass:'ټولګی اضافه',lclassname:'د ټولګي نوم',lclassgrade:'کچه',
-    thclassname:'د ټولګي نوم',thgrade:'کچه',notclasses:'تر اوس هیڅ ټولګی نه دی اضافه شوی.',
+    thclassname:'د ټولګي نوم',thgrade:'کچه',notclasses:'تر اوسه هیڅ ټولګی نه دی اضافه شوی.',
     csubjectassign:'د مضامینو درسي ساعتونه',csubjectassignsub:'مضامین ټولګیو ته ورکړئ',
-    baddassign:'درسي ساعت اضافه',lclass:'ټولګی',lsubject:'مطلب',lteacher:'ښوونکی',lweeklyperiods:'اونیزه دوري',
+    baddassign:'درسي ساعت اضافه',lclass:'ټولګی',lsubject:'مطلب',lteacher:'ښوونکی',lweeklyperiods:'اونیزه دورې',
     thclass:'ټولګی',thsubject:'مطلب',thteacher:'ښوونکی',thperiodsweek:'اونیزه',thscheduled:'مقرر',
-    notassign:'تر اوس هیڅ درسي ساعت نشته.',
+    notassign:'تر اوسه هیڅ درسي ساعت نشته.',
     cfulltimetable:'ټول تقسيم اوقات',cfulltimetablesub:'د ټولو ټولګیو تقسيم اوقات',
     bgenerate:'جوړول',bcheckconflicts:'ټکرونه وګورئ',bclear:'پاکول',bprint:'پرینټ',bexportxlsx:'Excel صادر',cbackup:'د معلوماتو بیک اپ',cbackupsub:'معلومات فایل ته صادر کړئ او وروسته یې بېرته وارد کړئ.',bbackup:'بیک اپ صادرول',brestore:'بیک اپ واردول',mmore:'نور',
-    notimetable:'تر اوس تقسيم اوقات نه دی جوړ شوی.',
+    notimetable:'تر اوسه تقسيم اوقات نه دی جوړ شوی.',
     cclasstimetable:'د ټولګي تقسيم اوقات',noselectclass:'ټولګی غوره کړئ.',
     cteachertimetable:'د ښوونکي تقسيم اوقات',noselectteacher:'ښوونکی غوره کړئ.',
     cconflictreport:'د ټکرونو راپور',cconflictreportsub:'د تقسيم اوقات ستونزې',
     brecheck:'بیا وګورئ',noconflicts:'تقسيم اوقات جوړ کړئ او بیا وګورئ.',
     ftitle:'د ښوونځي تقسيم اوقات',fsubtitle:'School Timetable Generator',
     fdeveloper:'جوړونکی:',fcopy:'© <span id="currentYear">2026</span> عبدالسلام رحيمي. ټول حقونه خوندي دي.',
-    wtitle:'د ښوونځي امستنه',wsubtitle:'خپل ښوونځی امستئ',
-    wstep1:'لومړی ګام: د ښوونځي معلومات',wstep2:'دویم ګام: دوري او وخت',wstep2desc:'د هرې ورځې دوري ولیکئ.',
+    wtitle:'د ښوونځي سمون',wsubtitle:'خپل ښوونځی امستئ',
+    wstep1:'لومړی ګام: د ښوونځي معلومات',wstep2:'دویم ګام: دورې او وخت',wstep2desc:'د هرې ورځې دورې ولیکئ.',
     wstep3:'دریم ګام: ژبه',wstep3desc:'خپله ژبه غوره کړئ.',
     bprev:'مخکنی',bnext:'بل',bfinish:'بشپړول',
     toast_saved:'خوندي شو!',toast_generated:'تقسيم اوقات جوړ شو!',toast_cleared:'پاک شو!',
     toast_error:'مهرباني وکړئ ټول معلومات ولیکئ!',toast_conflict_check:'د ټکرونو چک بشپړ شو!',
     toast_exported:'Excel فايل ډاونلوډ شو!',
-    total_periods:'ټوله دوري',teaching_periods:'تدریس',free_periods:'آزاد',
-    daily_periods:'ورځنۍ',weekly_periods:'اونیزه',break_label:'☕ استراحت',
+    total_periods:'ټولې دورې',teaching_periods:'تدریس',free_periods:'آزاد',
+    daily_periods:'ورځنۍ',weekly_periods:'اونیزه',break_label:'☕ تفريح',
     conflict_teacher:'د ښوونکي ټکر',conflict_class:'د ټولګي ټکر',
-    conflict_missing:'نیمګړي دوري',conflict_excess:'اضافه',conflict_unavail:'د شتون ستونزه',conflict_unsched:'نامقرر',
+    conflict_missing:'نیمګړي دورې',conflict_excess:'اضافه',conflict_unavail:'د شتون ستونزه',conflict_unsched:'نامقرر',
     type_label:'ډول:',generated_at:'جوړ شو:'
   },
   fa:{
     snavigation:'ناوبری',stimetable:'برنامه زمانی',
     mdashboard:'داشبورد',msetup:'تنظیمات',mperiods:'زمان‌بندی',msubjects:'دروس',
-    mteachers:'معلمان',mclasses:'کلاس‌ها',massignments:'تخصیص‌ها',
-    mfulltt:'برنامه کامل',mclasstt:'برنامه کلاس',mteachertt:'برنامه معلم',mconflicts:'تداخل‌ها',
-    st_teachers:'معلمان',st_classes:'کلاس‌ها',st_periods:'دوره‌ها',st_scheduled:'مقرر',
+    mteachers:'معلمان',mclasses:'صنف‌ها',massignments:'ساعت‌ها',
+    mfulltt:'برنامه کامل',mclasstt:'برنامه صنف',mteachertt:'برنامه معلم',msearch:'جستجو',mbackup:'پشتیبان',sdata:'داده‌ها',csearch:'جستجو',csearchsub:'استادان، صنف‌ها، مضامین و ساعات درسی را سریع پیدا کنید.',lsearch:'عبارت جستجو',search_placeholder:'نام، مضمون، صنف یا استاد...',search_hint:'برای جستجو چیزی بنویسید.',search_noresults:'نتیجه‌ای یافت نشد.',search_teacher:'استاد',search_class:'صنف',search_subject:'مضمون',search_assignment:'ساعت درسی',search_timetable:'تقسیم اوقات',mconflicts:'تداخل‌ها',
+    st_teachers:'معلمان',st_classes:'صنف‌ها',st_periods:'دوره‌ها',st_scheduled:'مقرر',
     pg_showing:'نمایش',pg_of:'از',pg_prev:'قبلی',pg_next:'بعدی',pg_all:'همه',pg_perpage:'در هر صفحه',
     dwelcome:'به سیستم برنامه زمانی خوش آمدید',dashsubtitle:'برنامه‌ریزی خودکار مکاتب افغانستان',
-    ds_teachers:'کل معلمان',ds_classes:'کل کلاس‌ها',ds_subjects:'کل دروس',
+    ds_teachers:'کل معلمان',ds_classes:'کل صنف‌ها',ds_subjects:'کل دروس',
     ds_weekperiods:'دوره‌های هفتگی',ds_scheduled:'مقرر',ds_unscheduled:'نامقرر',
     ds_conflicts:'تداخل‌ها',ds_completion:'تکمیل',
     cschoolinfo:'اطلاعات مکتب',cschoolinfosub:'اطلاعات را وارد کنید',
     lschoolname:'نام مکتب',lschooltype:'نوع مکتب',lstarttime:'ساعت شروع',lperioddur:'مدت دوره',
     opt_primary:'ابتدایی',opt_middle:'متوسطه',opt_high:'دبیرستان',
     cperiodconfig:'تنظیم دوره‌ها',cperiodconfigsub:'تعداد دوره‌ها. جمعه تعطیل.',
-    cbreakconfig:'تنظیم استراحت',cbreakconfigsub:'استراحت بعد از دوره',
-    lafterperiod:'بعد از دوره شماره',lbreakdur:'مدت استراحت',
+    cbreakconfig:'تنظیم تفريح',cbreakconfigsub:'تفريح بعد از دوره',
+    lafterperiod:'بعد از دوره شماره',lbreakdur:'مدت تفريح',
     csubjectmgmt:'مدیریت دروس',csubjectmgmtsub:'اضافه، ویرایش و حذف دروس',
     baddsubject:'اضافه درس',h4addsubject:'اضافه/ویرایش درس',lsubjname:'نام درس',lsubjunavailable:'دوره‌های غیرقابل استفاده (کلیک کنید)',
     cteacherreg:'ثبت معلمان',cteacherregsub:'به هر تعداد که نیاز دارید معلم اضافه کنید',
@@ -890,17 +887,17 @@ const i18n = {
     bsave:'ذخیره',bcancel:'لغو',bdelete:'حذف',bedit:'ویرایش',
     thname:'نام',thsubjects:'دروس',thsubjectname:'نام درس',thmaxdaily:'روزانه',thmaxweekly:'هفتگی',thactions:'عملیات',
     notteachers:'هنوز معلمی نیست.',notsubjects:'هنوز درسی نیست.',
-    cclassreg:'ثبت کلاس‌ها',cclassregsub:'به هر تعداد که نیاز دارید کلاس اضافه کنید',
-    baddclass:'اضافه کلاس',lclassname:'نام کلاس',lclassgrade:'پایه',
-    thclassname:'نام کلاس',thgrade:'پایه',notclasses:'هنوز کلاسی نیست.',
-    csubjectassign:'تخصیص دروس',csubjectassignsub:'تخصیص دروس به کلاس‌ها',
-    baddassign:'اضافه تخصیص',lclass:'کلاس',lsubject:'درس',lteacher:'معلم',lweeklyperiods:'هفتگی',
-    thclass:'کلاس',thsubject:'درس',thteacher:'معلم',thperiodsweek:'هفتگی',thscheduled:'مقرر',
-    notassign:'هنوز تخصیصی نیست.',
-    cfulltimetable:'برنامه کامل',cfulltimetablesub:'برنامه تمام کلاس‌ها',
+    cclassreg:'ثبت صنف‌ها',cclassregsub:'به هر تعداد که نیاز دارید صنف اضافه کنید',
+    baddclass:'اضافه صنف',lclassname:'نام صنف',lclassgrade:'پایه',
+    thclassname:'نام صنف',thgrade:'پایه',notclasses:'هنوز صنفی نیست.',
+    csubjectassign:'ساعت دروس',csubjectassignsub:'ساعت ها دروس به صنف‌ها',
+    baddassign:'اضافه ساعت',lclass:'صنف',lsubject:'درس',lteacher:'معلم',lweeklyperiods:'هفتگی',
+    thclass:'صنف',thsubject:'درس',thteacher:'معلم',thperiodsweek:'هفتگی',thscheduled:'مقرر',
+    notassign:'هنوز ساعتی نیست.',
+    cfulltimetable:'برنامه کامل',cfulltimetablesub:'برنامه تمام صنف‌ها',
     bgenerate:'تولید',bcheckconflicts:'بررسی تداخل',bclear:'پاک',bprint:'چاپ',bexportxlsx:'خروجی Excel',cbackup:'پشتیبان معلومات',cbackupsub:'معلومات را به فایل صادر و بعداً دوباره وارد کنید.',bbackup:'صدور پشتیبان',brestore:'وارد کردن پشتیبان',mmore:'بیشتر',
     notimetable:'برنامه‌ای تولید نشده.',
-    cclasstimetable:'برنامه کلاس',noselectclass:'کلاس انتخاب کنید.',
+    cclasstimetable:'برنامه صنف',noselectclass:'صنف انتخاب کنید.',
     cteachertimetable:'برنامه معلم',noselectteacher:'معلم انتخاب کنید.',
     cconflictreport:'گزارش تداخل',cconflictreportsub:'مشکلات برنامه‌ریزی',
     brecheck:'بررسی مجدد',noconflicts:'ابتدا برنامه تولید کنید.',
@@ -913,8 +910,8 @@ const i18n = {
     toast_saved:'ذخیره شد!',toast_generated:'تولید شد!',toast_cleared:'پاک شد!',
     toast_error:'فیلدها را پر کنید!',toast_conflict_check:'بررسی کامل!',toast_exported:'Excel دانلود شد!',
     total_periods:'کل',teaching_periods:'تدریس',free_periods:'آزاد',
-    daily_periods:'روزانه',weekly_periods:'هفتگی',break_label:'☕ استراحت',
-    conflict_teacher:'تداخل معلم',conflict_class:'تداخل کلاس',
+    daily_periods:'روزانه',weekly_periods:'هفتگی',break_label:'☕ تفريح',
+    conflict_teacher:'تداخل معلم',conflict_class:'تداخل صنف',
     conflict_missing:'ناقص',conflict_excess:'اضافی',conflict_unavail:'دسترسی',conflict_unsched:'نامقرر',
     type_label:'نوع:',generated_at:'تولید:'
   },
@@ -922,7 +919,7 @@ const i18n = {
     snavigation:'التنقل',stimetable:'الجدول الزمني',
     mdashboard:'لوحة التحكم',msetup:'إعداد المدرسة',mperiods:'الفترات',msubjects:'المواد',
     mteachers:'المعلمون',mclasses:'الفصول',massignments:'المهام',
-    mfulltt:'الجدول الكامل',mclasstt:'جدول الفصل',mteachertt:'جدول المعلم',mconflicts:'التعارضات',
+    mfulltt:'الجدول الكامل',mclasstt:'جدول الفصل',mteachertt:'جدول المعلم',msearch:'بحث',mbackup:'نسخة احتياطية',sdata:'البيانات',csearch:'بحث',csearchsub:'ابحث بسرعة عن المعلمين والفصول والمواد والحصص.',lsearch:'كلمة البحث',search_placeholder:'الاسم أو المادة أو الصف أو المعلم...',search_hint:'اكتب شيئاً للبحث.',search_noresults:'لم يتم العثور على نتائج.',search_teacher:'معلم',search_class:'صف',search_subject:'مادة',search_assignment:'حصة دراسية',search_timetable:'جدول الحصص',mconflicts:'التعارضات',
     st_teachers:'المعلمون',st_classes:'الفصول',st_periods:'الفترات',st_scheduled:'المجدولة',
     pg_showing:'عرض',pg_of:'من',pg_prev:'السابق',pg_next:'التالي',pg_all:'الكل',pg_perpage:'لكل صفحة',
     dwelcome:'مرحباً بكم في نظام الجدول الزمني',dashsubtitle:'جدولة تلقائية للمدارس الأفغانية',
@@ -1002,6 +999,8 @@ function applyTranslations(){
     const k=el.getAttribute('data-i18n'),txt=t(k);
     if(txt){if(el.tagName==='INPUT'&&el.type!=='button'&&el.type!=='submit')el.placeholder=txt;else if(k==='fcopy')el.innerHTML=txt;else el.textContent=txt}
   });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const key=el.getAttribute('data-i18n-placeholder');if(i18n[currentLang]?.[key])el.placeholder=i18n[currentLang][key]});
+  const si=document.getElementById('globalSearchInput');if(si&&si.value)performGlobalSearch();
   updateCurrentYear();
 }
 
@@ -1352,7 +1351,7 @@ function getTN(id){const tc=STATE.teachers.find(t=>t.id===id);return tc?tc.name:
 function getCN(id){const cl=STATE.classes.find(c=>c.id===id);return cl?cl.name:'?'}
 function renderConflicts(){
   const c=document.getElementById('conflictContent');
-  if(!STATE.conflicts.length){c.innerHTML='<div class="empty-msg"><div class="em-icon">✅</div><div>No conflicts!</div></div>';return}
+  if(!STATE.conflicts.length){c.innerHTML='<div class="empty-msg"><div class="em-icon">✅</div><div>هيڅ ټکر نشته</div></div>';return}
   c.innerHTML=STATE.conflicts.map(x=>`<div class="conflict-item ${x.severity==='warning'?'warn':''}"><div class="conflict-icon">${x.severity==='error'?'🔴':'🟡'}</div><div class="conflict-text"><div class="conflict-title">${t('conflict_'+x.type)}</div><div class="conflict-desc">${x.message}</div></div></div>`).join('');
 }
 
@@ -1365,7 +1364,7 @@ function buildTimetableGrid(entries,filterClassId,filterTeacherId){
   const dn=currentLang==='ps'?STATE.daysPs:currentLang==='fa'?STATE.daysFa:currentLang==='ar'?STATE.daysAr:STATE.days;
   const ba=STATE.breakAfterPeriod,bd=STATE.breakDuration;
   let h=`<div class="tt-grid" style="grid-template-columns:80px repeat(${STATE.days.length},1fr)">`;
-  h+='<div class="tt-header">دوري</div>';dn.forEach(d=>h+=`<div class="tt-header">${d}</div>`);
+  h+='<div class="tt-header">دورې</div>';dn.forEach(d=>h+=`<div class="tt-header">${d}</div>`);
   for(let p=1;p<=maxP;p++){
     if(p===ba+1)h+=`<div class="tt-break" style="grid-column:1/-1">${t('break_label')} (${bd} min)</div>`;
     h+=`<div class="tt-day">P${p}</div>`;
@@ -1441,32 +1440,6 @@ function refreshDashboard(){
 }
 
 // ===== XLSX EXPORT (with native fallback) =====
-// ===== Excel export (works standalone in any browser — no external library,
-// no server, no desktop shell needed) using the SpreadsheetML 2003 XML format,
-// which Excel/LibreOffice/Google Sheets open natively. =====
-function xlEscape(s){
-  return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function xlCell(val){
-  if(val===''||val==null)return'<Cell/>';
-  const num=typeof val==='number'&&isFinite(val);
-  const text=xlEscape(val).replace(/\r?\n/g,'&#10;');
-  const style=String(val).includes('\n')?' ss:StyleID="wrap"':'';
-  return `<Cell${style}><Data ss:Type="${num?'Number':'String'}">${text}</Data></Cell>`;
-}
-function xlRow(row){return `<Row>${row.map(xlCell).join('')}</Row>`}
-function xlSheet(sheet){
-  const name=xlEscape((sheet.name||'Sheet').replace(/[\\\/\?\*\[\]:]/g,' ').slice(0,31))||'Sheet';
-  return `<Worksheet ss:Name="${name}"><Table>${(sheet.rows||[]).map(xlRow).join('')}</Table></Worksheet>`;
-}
-function buildSpreadsheetML(sheetData){
-  return `<?xml version="1.0"?>
-<?mso-application progid="Excel.Sheet"?>
-<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">
-<Styles><Style ss:ID="Default" ss:Name="Normal"><Alignment ss:Vertical="Center"/><Font ss:FontName="Calibri" ss:Size="11"/></Style><Style ss:ID="wrap"><Alignment ss:WrapText="1" ss:Vertical="Center"/></Style></Styles>
-${sheetData.map(xlSheet).join('')}
-</Workbook>`;
-}
 async function exportToXLSX(filename, sheetData){
   try{
     if(window.pywebview?.api){
@@ -1474,17 +1447,18 @@ async function exportToXLSX(filename, sheetData){
       if(result?.ok){showToast(t('toast_exported')+'\n'+result.path,'success');return;}
       throw new Error(result?.error||'Could not save Excel file');
     }
-    // Browser mode: generate a real, Excel-openable file entirely client-side.
-    const xml=buildSpreadsheetML(sheetData);
-    const blob=new Blob(['\ufeff'+xml],{type:'application/vnd.ms-excel'});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url;a.download=filename.replace(/\.xlsx$/i,'.xls');
-    document.body.appendChild(a);a.click();a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),1500);
+    const safeName=filename.replace(/\.xlsx$/i,'.xls');
+    const workbookHtml=sheetData.map(sheet=>{
+      const rows=(sheet.rows||[]).map(row=>`<tr>${row.map(v=>`<td>${escapeExcelHtml(v)}</td>`).join('')}</tr>`).join('');
+      return `<table><tbody>${rows}</tbody></table>`;
+    }).join('<br>');
+    const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>table{border-collapse:collapse;font-family:Arial,sans-serif}td{border:1px solid #999;padding:6px 10px;white-space:pre-wrap}</style></head><body dir="rtl">${workbookHtml}</body></html>`;
+    const blob=new Blob([html],{type:'application/vnd.ms-excel;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download=safeName;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
     showToast(t('toast_exported'),'success');
   }catch(e){showToast('Export error: '+e.message,'error')}
 }
+function escapeExcelHtml(value){return String(value??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/\n/g,'<br>');}
 
 function exportFullTimetableXLSX(){
   if(!STATE.timetable||!STATE.timetable.entries.length){showToast('Generate first!','error');return}
@@ -1525,7 +1499,7 @@ function exportClassTimetableXLSX(){
   rows.push([STATE.school.name||'School','','','','','','']);
   rows.push([cl.name,'','','','','','']);
   rows.push(['']);
-  const hdr=['دوري'];STATE.days.forEach((d,i)=>hdr.push(dayLabel(i)));rows.push(hdr);
+  const hdr=['دورې'];STATE.days.forEach((d,i)=>hdr.push(dayLabel(i)));rows.push(hdr);
   for(let p=1;p<=maxP;p++){
     if(p===STATE.breakAfterPeriod+1)rows.push(['☕ BREAK','','','','','','']);
     const row=['P'+p];STATE.days.forEach(day=>{const dp=STATE.periodsPerDay[day]||6;if(p>dp)row.push('');else{const en=entries.find(e=>e.day===day&&e.period===p);row.push(en?en.subject+'\n'+getTN(en.teacherId):'—')}});
@@ -1545,7 +1519,7 @@ function exportTeacherTimetableXLSX(){
   rows.push(['👨‍🏫 '+tc.name,'','','','','','']);
   rows.push([tc.subjects.join(', ')]);
   rows.push(['']);
-  const hdr=['دوري'];STATE.days.forEach((d,i)=>hdr.push(dayLabel(i)));rows.push(hdr);
+  const hdr=['دورې'];STATE.days.forEach((d,i)=>hdr.push(dayLabel(i)));rows.push(hdr);
   for(let p=1;p<=maxP;p++){
     if(p===STATE.breakAfterPeriod+1)rows.push(['☕ BREAK','','','','','','']);
     const row=['P'+p];STATE.days.forEach(day=>{const dp=STATE.periodsPerDay[day]||6;if(p>dp)row.push('');else{const en=entries.find(e=>e.day===day&&e.period===p);row.push(en?en.subject+'\n'+getCN(en.classId):'—')}});
@@ -1559,11 +1533,11 @@ function exportTeacherTimetableXLSX(){
 // ===== PRINT =====
 function printSection(id){
   const el=document.getElementById(id); if(!el) return;
-  // Do not open a second browser window: print directly from the embedded Desktop WebView.
   const sections=document.querySelectorAll('.section');
   sections.forEach(s=>s.classList.remove('active'));
   const parent=el.closest('.section'); if(parent) parent.classList.add('active');
-  setTimeout(()=>window.print(),100);
+  document.body.classList.add('printing');
+  setTimeout(()=>{window.print();setTimeout(()=>document.body.classList.remove('printing'),500)},100);
 }
 // ===== WIZARD =====
 function initWizard(){if(STATE.initialized){document.getElementById('wizardOverlay').classList.add('hidden');return}renderWizPeriodGrid();updateWizDots()}
@@ -1642,15 +1616,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     setTimeout(start,300);
   }
 });
-
-// ===== PWA: register the service worker so the app works fully offline
-// once it has been opened at least once. Runs only in real browser mode
-// (skipped inside the pywebview desktop shell, which doesn't need it). =====
-if('serviceWorker' in navigator && !window.pywebview){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('service-worker.js').catch(()=>{});
-  });
-}
 </script>
 </body>
 </html>
